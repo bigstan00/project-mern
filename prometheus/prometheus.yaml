@@ -1,0 +1,41 @@
+global:
+  scrape_interval: 15s  # Default scrape interval
+
+rule_files:
+  - alert.yaml
+
+alerting:
+  alertmanagers:
+    - scheme: http
+      static_configs:
+        - targets: ['alertmgr:9093']
+
+scrape_configs:
+  # - job_name: 'backend_1'
+  #   static_configs:
+  #     - targets: ['backend_1_cont:3500']  # Replace with the actual service name and port
+
+  - job_name: 'backend'
+    static_configs:
+      - targets: ['mern-redo-backend-1:3500']
+  
+  # - job_name: 'backend_3'
+  #   static_configs:
+  #     - targets: ['backend_3_cont:3500']
+
+  - job_name: 'prometheus'
+    scrape_interval: 1m
+    static_configs:
+      - targets: ['prometheus_service:9090'] 
+
+  - job_name: 'node'
+    static_configs:
+      - targets: ['node-exporter:9100']
+
+  # - job_name: 'cadvisor'
+  #   static_configs:
+  #     - targets: ['cadvisor:8080']
+  
+
+
+  
