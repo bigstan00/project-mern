@@ -27,19 +27,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      - name: Build frontend Docker image
-        env:
-          IMAGE_NAME: frontend
-          VERSION: latest
+      - name: Build Frontend Image
         run: |
-          docker build -t $IMAGE_NAME:$VERSION .
+          cd frontend
+          docker build -t frontend:latest .
 
-      - name: Build backend Docker image
-        env:
-          IMAGE_NAME: backend
-          VERSION: latest
+      - name: Build Backend Image
         run: |
-          docker build -t $IMAGE_NAME:$VERSION .
+          cd backend
+          docker build -t backend:latest .
 
       - name: Run Docker Compose Locally
         run: |
@@ -80,34 +76,12 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
-      - name: Tag Frontend Image
-        env:
-          IMAGE_NAME: frontend
-          VERSION: latest
-          USERNAME: bigstan00
+      - name: Push Frontend Image to Docker Hub
         run: |
-          docker tag $USERNAME/$IMAGE_NAME:$VERSION $USERNAME/$IMAGE_NAME:$VERSION
+          docker tag frontend:latest bigstan00/frontend:latest
+          docker push bigstan00/frontend:latest
 
-      - name: Tag Backend Image
-        env:
-          IMAGE_NAME: backend
-          VERSION: latest
-          USERNAME: bigstan00
+      - name: Push Backend Image to Docker Hub
         run: |
-          docker tag $USERNAME/$IMAGE_NAME:$VERSION $USERNAME/$IMAGE_NAME:$VERSION
-
-      - name: Push Docker frontend image to Docker Hub
-        env:
-          IMAGE_NAME: frontend
-          VERSION: latest
-          USERNAME: bigstan00
-        run: |
-          docker push $USERNAME/$IMAGE_NAME:$VERSION
-
-      - name: Push Docker backend image to Docker Hub
-        env:
-          IMAGE_NAME: backend
-          VERSION: latest
-          USERNAME: bigstan00
-        run: |
-          docker push $USERNAME/$IMAGE_NAME:$VERSION
+          docker tag backend:latest bigstan00/backend:latest
+          docker push bigstan00/backend:latest
