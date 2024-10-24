@@ -82,6 +82,7 @@ services:
     
   nginx:
     image: nginx:latest
+    container_name: nginx-cont
     ports:
       - "3500:80"  # Expose NGINX on port 80
     volumes:

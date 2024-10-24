@@ -56,7 +56,7 @@ jobs:
 
       - name: Check NGINX Configuration
         run: |
-          docker exec mern-redo-nginx-1 nginx -t  # Validate NGINX config
+          docker exec nginx-cont nginx -t  # Validate NGINX config
 
       - name: Check Node Exporter
         run: |
