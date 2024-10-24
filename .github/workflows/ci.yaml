@@ -140,7 +140,7 @@ jobs:
           cd backend
           docker build -t backend:1 .
 
-            - name: Push Backend Image to Docker Hub
+      - name: Push Backend Image to Docker Hub
       - run: |
           docker tag backend:1 bigstan00/backend:1
           docker push bigstan00/backend:1
