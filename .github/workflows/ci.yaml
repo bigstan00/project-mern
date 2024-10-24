@@ -30,12 +30,12 @@ jobs:
       - name: Build Frontend Image
         run: |
           cd frontend
-          docker build -t frontend:latest .
+          docker build -t frontend:1 .
 
       - name: Build Backend Image
         run: |
           cd backend
-          docker build -t backend:latest .
+          docker build -t backend:1 .
       - name: Verify images
         run: |
           docker images
@@ -81,10 +81,10 @@ jobs:
 
       - name: Push Frontend Image to Docker Hub
         run: |
-          docker tag frontend:latest bigstan00/frontend:latest
-          docker push bigstan00/frontend:latest
+          docker tag frontend:1 bigstan00/frontend:1
+          docker push bigstan00/frontend:1
 
       - name: Push Backend Image to Docker Hub
         run: |
-          docker tag backend:latest bigstan00/backend:latest
-          docker push bigstan00/backend:latest
+          docker tag backend:1 bigstan00/backend:1
+          docker push bigstan00/backend:1
