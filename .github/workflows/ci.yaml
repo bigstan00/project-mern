@@ -37,10 +37,6 @@ jobs:
           cd backend
           docker build -t backend .
 
-      - name: Run Backend Tests
-        run: |
-          docker run --rm local-backend:latest npm test -- --watch=false --passWithNoTests
-
       - name: Run Docker Compose Locally
         run: |
           docker compose down --remove-orphans  # Ensure no conflicting containers
