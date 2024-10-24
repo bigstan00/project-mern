@@ -173,3 +173,14 @@ jobs:
       - name: Check Node Exporter
         run: |
           curl -f http://localhost:9100 || exit 1
+      
+      - name: Verify Application is Running
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            docker ps  # Check running containers
+            curl -f http://localhost:3000 || exit 1  # Check frontend
+            curl -f http://localhost:5000 || exit 1  # Check backend
