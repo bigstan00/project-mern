@@ -141,7 +141,7 @@ jobs:
           docker build -t backend:1 .
 
       - name: Push Backend Image to Docker Hub
-      - run: |
+        run: |
           docker tag backend:1 bigstan00/backend:1
           docker push bigstan00/backend:1
 
@@ -173,9 +173,3 @@ jobs:
       - name: Check Node Exporter
         run: |
           curl -f http://localhost:9100 || exit 1
-
-
-
-
-
-
