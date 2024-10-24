@@ -27,15 +27,21 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      - name: Build Frontend Image
+      - name: Build Docker image
+        env:
+          IMAGE_NAME: frontend
+          VERSION: latest
+          USERNAME: bigstan00
         run: |
-          cd frontend
-          docker build -t frontend .
+          docker build -t $USERNAME/$IMAGE_NAME:$VERSION .
 
-      - name: Build Backend Image
+      - name: Build Docker image
+        env:
+          IMAGE_NAME: backend
+          VERSION: latest
+          USERNAME: bigstan00
         run: |
-          cd backend
-          docker build -t backend .
+          docker build -t $USERNAME/$IMAGE_NAME:$VERSION .
 
       - name: Run Docker Compose Locally
         run: |
@@ -75,13 +81,35 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
-
-      - name: Push Frontend Image to Docker Hub
+      
+      - name: Tag image
+        env:
+          IMAGE_NAME: frontend
+          VERSION: latest
+          USERNAME: bigstan00
         run: |
-          docker tag frontend:latest bigstan00/frontend:latest
-          docker push bigstan00/frontend:latest
-
-      - name: Push Backend Image to Docker Hub
+          docker tag $USERNAME/$IMAGE_NAME:$VERSION
+          
+      - name: Tag image
+        env:
+          IMAGE_NAME: backend
+          VERSION: latest
+          USERNAME: bigstan00
         run: |
-          docker tag backend:latest bigstan00/backend:latest
-          docker push bigstan00/backend:latest
+          docker tag $USERNAME/$IMAGE_NAME:$VERSION
+
+      - name: Push Docker image to Docker Hub
+        env:
+          IMAGE_NAME: frontend
+          VERSION: latest
+          USERNAME: bigstan00
+        run: |
+          docker push $USERNAME/$IMAGE_NAME:$VERSION
+
+      - name: Push Docker image to Docker Hub
+        env:
+          IMAGE_NAME: backend
+          VERSION: latest
+          USERNAME: bigstan00
+        run: |
+          docker push $USERNAME/$IMAGE_NAME:$VERSION
