@@ -31,17 +31,15 @@ jobs:
         env:
           IMAGE_NAME: frontend
           VERSION: latest
-          USERNAME: bigstan00
         run: |
-          docker build -t $USERNAME/$IMAGE_NAME:$VERSION .
+          docker build -t $IMAGE_NAME:$VERSION .
 
       - name: Build backend Docker image
         env:
           IMAGE_NAME: backend
           VERSION: latest
-          USERNAME: bigstan00
         run: |
-          docker build -t $USERNAME/$IMAGE_NAME:$VERSION .
+          docker build -t $IMAGE_NAME:$VERSION .
 
       - name: Run Docker Compose Locally
         run: |
