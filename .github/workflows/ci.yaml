@@ -30,7 +30,7 @@ jobs:
       - name: Build Frontend Image
         run: |
           cd frontend
-          docker build -t local-frontend .
+          docker build -t frontend .
 
       - name: Build Backend Image
         run: |
