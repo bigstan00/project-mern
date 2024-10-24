@@ -27,7 +27,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      - name: Build Docker image
+      - name: Build frontend Docker image
         env:
           IMAGE_NAME: frontend
           VERSION: latest
@@ -35,7 +35,7 @@ jobs:
         run: |
           docker build -t $USERNAME/$IMAGE_NAME:$VERSION .
 
-      - name: Build Docker image
+      - name: Build backend Docker image
         env:
           IMAGE_NAME: backend
           VERSION: latest
@@ -81,24 +81,24 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
-      
-      - name: Tag image
+
+      - name: Tag Frontend Image
         env:
           IMAGE_NAME: frontend
           VERSION: latest
           USERNAME: bigstan00
         run: |
-          docker tag $USERNAME/$IMAGE_NAME:$VERSION
-          
-      - name: Tag image
+          docker tag $USERNAME/$IMAGE_NAME:$VERSION $USERNAME/$IMAGE_NAME:$VERSION
+
+      - name: Tag Backend Image
         env:
           IMAGE_NAME: backend
           VERSION: latest
           USERNAME: bigstan00
         run: |
-          docker tag $USERNAME/$IMAGE_NAME:$VERSION
+          docker tag $USERNAME/$IMAGE_NAME:$VERSION $USERNAME/$IMAGE_NAME:$VERSION
 
-      - name: Push Docker image to Docker Hub
+      - name: Push Docker frontend image to Docker Hub
         env:
           IMAGE_NAME: frontend
           VERSION: latest
@@ -106,7 +106,7 @@ jobs:
         run: |
           docker push $USERNAME/$IMAGE_NAME:$VERSION
 
-      - name: Push Docker image to Docker Hub
+      - name: Push Docker backend image to Docker Hub
         env:
           IMAGE_NAME: backend
           VERSION: latest
