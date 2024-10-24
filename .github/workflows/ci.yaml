@@ -36,6 +36,9 @@ jobs:
         run: |
           cd backend
           docker build -t backend:latest .
+      - name: Verify images
+        run: |
+          docker images
 
       - name: Run Docker Compose Locally
         run: |
