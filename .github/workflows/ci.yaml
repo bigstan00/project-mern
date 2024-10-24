@@ -78,7 +78,7 @@ jobs:
 
       - name: Push Frontend Image to Docker Hub
         run: |
-          docker tag backend:latest bigstan00/frontend:latest
+          docker tag frontend:latest bigstan00/frontend:latest
           docker push bigstan00/frontend:latest
 
       - name: Push Backend Image to Docker Hub
