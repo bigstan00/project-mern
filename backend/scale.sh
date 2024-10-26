@@ -415,12 +415,12 @@ set -x  # Enable debug mode to trace commands
 
 # Configuration
 SERVICE_NAME="backend"
-COMPOSE_FILE="/home/bigstan/mern-redo/docker-compose.yaml"
+COMPOSE_FILE="/home/ubuntu/project-mern/docker-compose.yaml"
 MAX_INSTANCES=5
 MIN_INSTANCES=1
 CPU_THRESHOLD_UP=75
 CPU_THRESHOLD_DOWN=30
-LOG_FILE="/home/bigstan/mern-redo/backend/scale.log"
+LOG_FILE="/home/ubuntu/project-mern/backend/scale.log"
 LOG_INTERVAL=300  # Log every 5 minutes (300 seconds)
 
 # Function to get CPU usage
