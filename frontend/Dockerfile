@@ -41,6 +41,9 @@ FROM node:16-alpine as build_image
 # Set working directory
 WORKDIR /home/app
 
+# Install curl and stress-ng using apk (Alpine package manager)
+RUN apk add --no-cache curl
+
 # Copy package.json and package-lock.json first (for efficient caching)
 COPY package.json package-lock.json ./
 
