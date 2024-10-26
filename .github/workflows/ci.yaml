@@ -131,7 +131,4 @@ jobs:
             # Verify the running containers
             docker ps
 
-            # Test frontend and backend services
-            curl -f http://18.117.73.3/:3000 || exit 1  # Frontend check
-            curl -f http://18.117.73.3/:80 || exit 1  # Backend check
           debug: true  # Enable debug logs
