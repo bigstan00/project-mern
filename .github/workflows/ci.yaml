@@ -183,4 +183,4 @@ jobs:
           script: |
             docker ps  # Check running containers
             curl -f http://localhost:3000 || exit 1  # Check frontend
-            curl -f http://localhost:5000 || exit 1  # Check backend
+            curl -f http://localhost:3500 || exit 1  # Check backend
