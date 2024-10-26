@@ -9,8 +9,8 @@
 + last_log_time=0
 + true
 + docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ wc -l
 + grep backend
++ wc -l
 + current_instances=0
 + get_cpu_usage
 + docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
@@ -20,7 +20,7 @@
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729951202
++ current_time=1729954802
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -43,7 +43,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729951322
++ current_time=1729954922
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -66,7 +66,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729951443
++ current_time=1729955043
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -89,7 +89,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729951563
++ current_time=1729955163
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -112,7 +112,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729951683
++ current_time=1729955284
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -135,7 +135,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729951804
++ current_time=1729955404
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -158,7 +158,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729951924
++ current_time=1729955525
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -181,7 +181,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729952045
++ current_time=1729955645
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -204,7 +204,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729952165
++ current_time=1729955766
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -227,7 +227,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729952286
++ current_time=1729955886
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -250,7 +250,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729952406
++ current_time=1729956006
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -273,7 +273,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729952527
++ current_time=1729956127
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -296,7 +296,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729952647
++ current_time=1729956247
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -319,7 +319,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729952767
++ current_time=1729956368
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -342,7 +342,30 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729952888
++ current_time=1729956488
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ echo No scaling action needed for backend
++ tee -a /home/bigstan/mern-redo/backend/scale.log
+No scaling action needed for backend
++ sleep 120
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            + true
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
++ grep backend
++ wc -l
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729954815
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -365,30 +388,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729953008
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo+  No scaling action needed for backend
-tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729953129
++ current_time=1729954936
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -411,7 +411,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729953250
++ current_time=1729955056
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -434,7 +434,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729953370
++ current_time=1729955177
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -457,7 +457,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729953490
++ current_time=1729955297
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -480,53 +480,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729953611
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ + echo No scaling action needed for backend
-tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729953731
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-+ echo No scaling action needed for backend
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729953852
++ current_time=1729955418
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -549,7 +503,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729953972
++ current_time=1729955538
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -572,7 +526,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729954093
++ current_time=1729955659
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -595,7 +549,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729954213
++ current_time=1729955779
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -618,7 +572,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729954334
++ current_time=1729955899
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -641,7 +595,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729954454
++ current_time=1729956020
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -664,7 +618,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729954575
++ current_time=1729956140
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -687,697 +641,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729954695
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729951215
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729951336
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729951456
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729951576
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729951697
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ + wc -l
-grep backend
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729951817
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729951938
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729952058
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729952179
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729952299
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729952420
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729952540
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729952661
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729952781
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729952901
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729953022
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729953142
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729953263
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729953383
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729953504
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729953624
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729953744
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729953865
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729953985
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729954106
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729954226
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729954347
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729954467
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729954588
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729954708
++ current_time=1729956261
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -1400,7 +664,7 @@ wc -l
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729951229
++ current_time=1729956381
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -1423,7 +687,30 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729951349
++ current_time=1729956502
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ echo No scaling action needed for backend
++ tee -a /home/bigstan/mern-redo/backend/scale.log
+No scaling action needed for backend
++ sleep 120
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            + true
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
++ grep backend
++ wc -l
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729954828
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -1446,7 +733,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729951469
++ current_time=1729954949
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -1457,237 +744,7 @@ No scaling action needed for backend
 No scaling action needed for backend
 + sleep 120
 + true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729951590
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729951710
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729951831
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729951951
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729952072
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729952192
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729952312
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729952433
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729952554
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ + wc -l
-docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729952674
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps+ 
++ + docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
 grep backend
 + wc -l
 + current_instances=0
@@ -1699,7 +756,7 @@ grep backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729952795
++ current_time=1729955069
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -1722,7 +779,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729952915
++ current_time=1729955190
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -1745,30 +802,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729953035
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps+ 
-grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729953156
++ current_time=1729955310
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -1791,7 +825,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729953276
++ current_time=1729955431
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -1814,7 +848,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729953397
++ current_time=1729955551
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -1837,7 +871,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729953517
++ current_time=1729955672
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -1860,7 +894,53 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729953638
++ current_time=1729955792
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ echo No scaling action needed for backend
++ tee -a /home/bigstan/mern-redo/backend/scale.log
+No scaling action needed for backend
++ sleep 120
++ true
++ grep backend
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
++ wc -l
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729955912
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ echo No scaling action needed for backend
++ tee -a /home/bigstan/mern-redo/backend/scale.log
+No scaling action needed for backend
++ sleep 120
++ true
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
++ + grep backend
+wc -l
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729956033
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -1883,7 +963,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729953758
++ current_time=1729956153
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -1906,30 +986,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729953878
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ + grepwc backend -l
-
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729953999
++ current_time=1729956274
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -1952,30 +1009,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729954119
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ wc -l
-+ docker+  compose -fgrep /home/bigstan/mern-redo/docker-compose.yaml backend ps
-
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729954240
++ current_time=1729956394
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -1998,7 +1032,7 @@ No scaling action needed for backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729954360
++ current_time=1729956514
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
@@ -2008,53 +1042,7 @@ No scaling action needed for backend
 + tee -a /home/bigstan/mern-redo/backend/scale.log
 No scaling action needed for backend
 + sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ grep backend
-+ wc -l
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729954481
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
-+ + wcgrep -l backend
-
-+ current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
-+ container_ids=
-+ [ -z  ]
-+ echo 0
-+ return
-+ cpu_usage=0
-+ date +%s
-+ current_time=1729954601
-+ current_time - last_log_time LOG_INTERVAL
-/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
-+ [ 0 -gt 75 ]
-+ [ 0 -lt 30 ]
-+ [ 0 -gt 1 ]
-+ echo No scaling action needed for backend
-+ tee -a /home/bigstan/mern-redo/backend/scale.log
-No scaling action needed for backend
-+ sleep 120
-+ true
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            + true
 + docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
 + + wc -l
 grep backend
@@ -2067,7 +1055,306 @@ grep backend
 + return
 + cpu_usage=0
 + date +%s
-+ current_time=1729954721
++ current_time=1729954842
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ + tee -a /home/bigstan/mern-redo/backend/scale.log
+echo No scaling action needed for backend
+No scaling action needed for backend
++ sleep 120
++ true
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
++ grep backend
++ wc -l
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729954962
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ echo No scaling action needed for backend
++ tee -a /home/bigstan/mern-redo/backend/scale.log
+No scaling action needed for backend
++ sleep 120
++ true
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
++ grep backend
++ wc -l
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729955083
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ echo No scaling action needed for backend
++ tee -a /home/bigstan/mern-redo/backend/scale.log
+No scaling action needed for backend
++ sleep 120
++ true
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
++ grep backend
++ wc -l
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729955203
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ + tee -a /home/bigstan/mern-redo/backend/scale.logecho
+ No scaling action needed for backend
+No scaling action needed for backend
++ sleep 120
++ true
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
++ grep backend
++ wc -l
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729955324
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ echo No scaling action needed for backend
++ tee -a /home/bigstan/mern-redo/backend/scale.log
+No scaling action needed for backend
++ sleep 120
++ true
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
++ + grep backend
+wc -l
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729955444
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ echo No scaling action needed for backend
++ tee -a /home/bigstan/mern-redo/backend/scale.log
+No scaling action needed for backend
++ sleep 120
++ true
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
++ grep backend
++ wc -l
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729955565
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ echo No scaling action needed for backend
++ tee -a /home/bigstan/mern-redo/backend/scale.log
+No scaling action needed for backend
++ sleep 120
++ true
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
++ grep backend
++ wc -l
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729955685
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ echo No scaling action needed for backend
++ tee -a /home/bigstan/mern-redo/backend/scale.log
+No scaling action needed for backend
++ sleep 120
++ true
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
++ grep backend
++ wc -l
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729955805
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ echo No scaling action needed for backend
++ tee -a /home/bigstan/mern-redo/backend/scale.log
+No scaling action needed for backend
++ sleep 120
++ true
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
++ grep backend
++ wc -l
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729955926
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ echo No scaling action needed for backend
++ tee -a /home/bigstan/mern-redo/backend/scale.log
+No scaling action needed for backend
++ sleep 120
++ true
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
++ grep backend
++ wc -l
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729956046
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ echo No scaling action needed for backend
++ tee -a /home/bigstan/mern-redo/backend/scale.log
+No scaling action needed for backend
++ sleep 120
++ true
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
++ grep backend
++ wc -l
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729956166
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ echo No scaling action needed for backend
++ tee -a /home/bigstan/mern-redo/backend/scale.log
+No scaling action needed for backend
++ sleep 120
++ true
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
++ grep backend
++ wc -l
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729956287
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ echo No scaling action needed for backend
++ tee -a /home/bigstan/mern-redo/backend/scale.log
+No scaling action needed for backend
++ sleep 120
++ true
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
++ grep backend
++ wc -l
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729956407
 + current_time - last_log_time LOG_INTERVAL
 /home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
 + [ 0 -gt 75 ]
