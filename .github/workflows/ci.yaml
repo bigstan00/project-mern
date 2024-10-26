@@ -113,14 +113,14 @@ jobs:
             sudo usermod -aG docker $USER
 
             # Clone or pull the latest project code
-            if [ ! -d "/home/ubuntu/mern-redo" ]; then
-              git clone https://github.com/bigstan00/mern-redo
+            if [ ! -d "/home/ubuntu/project-mern" ]; then
+              git clone https://github.com/bigstan00/project-mern
             else
-              cd /home/ubuntu/mern-redo && git pull
+              cd /home/ubuntu/project-mern && git pull
             fi
 
             # Navigate to the project directory
-            cd /home/ubuntu/mern-redo
+            cd /home/ubuntu/project-mern
 
             # Stop any running containers
             docker compose down
