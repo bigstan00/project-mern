@@ -306,3 +306,256 @@ No scaling action needed for backend
 + tee -a /home/bigstan/mern-redo/backend/scale.log
 No scaling action needed for backend
 + sleep 120
++ true
++ + + wc -l
+docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
+grep backend
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729945568
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ echo No scaling action needed for backend
++ tee -a /home/bigstan/mern-redo/backend/scale.log
+No scaling action needed for backend
++ sleep 120
++ true
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
++ grep backend
++ wc -l
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729945688
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ echo No scaling action needed for backend
++ tee -a /home/bigstan/mern-redo/backend/scale.log
+No scaling action needed for backend
++ sleep 120
++ true
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
++ grep backend
++ wc -l
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729945808
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ echo No scaling action needed for backend
++ tee -a /home/bigstan/mern-redo/backend/scale.log
+No scaling action needed for backend
++ sleep 120
++ true
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
++ grep backend
++ wc -l
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729945929
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ + tee -a /home/bigstan/mern-redo/backend/scale.log
+echo No scaling action needed for backend
+No scaling action needed for backend
++ sleep 120
++ true
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
++ grep backend
++ wc -l
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729946049
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ echo No scaling action needed for backend
++ tee -a /home/bigstan/mern-redo/backend/scale.log
+No scaling action needed for backend
++ sleep 120
++ true
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
++ grep backend
++ wc -l
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729946170
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ echo No scaling action needed for backend
++ tee -a /home/bigstan/mern-redo/backend/scale.log
+No scaling action needed for backend
++ sleep 120
++ true
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
++ grep backend
++ wc -l
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729946290
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ echo No scaling action needed for backend
++ tee -a /home/bigstan/mern-redo/backend/scale.log
+No scaling action needed for backend
++ sleep 120
++ true
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
++ grep backend
++ wc -l
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729946411
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ echo No scaling action needed for backend
++ tee -a /home/bigstan/mern-redo/backend/scale.log
+No scaling action needed for backend
++ sleep 120
++ true
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
++ grep backend
++ wc -l
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729946531
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ echo No scaling action needed for backend
++ tee -a /home/bigstan/mern-redo/backend/scale.log
+No scaling action needed for backend
++ sleep 120
++ true
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
++ grep backend
++ wc -l
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729946652
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ echo No scaling action needed for backend
++ tee -a /home/bigstan/mern-redo/backend/scale.log
+No scaling action needed for backend
++ sleep 120
++ true
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps
++ grep backend
++ wc -l
++ current_instances=0
++ get_cpu_usage
++ docker compose -f /home/bigstan/mern-redo/docker-compose.yaml ps -q backend
++ container_ids=
++ [ -z  ]
++ echo 0
++ return
++ cpu_usage=0
++ date +%s
++ current_time=1729946772
++ current_time - last_log_time LOG_INTERVAL
+/home/bigstan/mern-redo/backend/scale.sh: 462: current_time: not found
++ [ 0 -gt 75 ]
++ [ 0 -lt 30 ]
++ [ 0 -gt 1 ]
++ echo No scaling action needed for backend
++ tee -a /home/bigstan/mern-redo/backend/scale.log
+No scaling action needed for backend
++ sleep 120
