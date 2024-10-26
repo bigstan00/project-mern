@@ -128,11 +128,11 @@ jobs:
             # Build and start containers in detached mode
             docker compose up -d --build
             
-            #Setup cronjob to trigger auto-scaling
+            # Setup cronjob to trigger auto-scaling
             (crontab -l ; echo "*/5 * * * * /home/ubuntu/project-mern/backend/scale.sh >> /home/ubuntu/project-mern/cron.log 2>&1") | crontab -
 
-            #verify cronjob
-            crontab -l 
+            # Verify cronjob
+            crontab -l  
             
             # Verify the running containers
             docker ps
