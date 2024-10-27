@@ -30,21 +30,19 @@ function Todos({data, setData}) {
         const updatedData = [...data];
         const [movedTodo] = updatedData.splice(fromIndex, 1);
         updatedData.splice(toIndex, 0, movedTodo);
-
-        const prevData = [...data];
-
+    
         try {
-            await axios.post("http://3.135.193.160:3500/todo", {newOrder: updatedData})
+            await axios.patch('http://3.135.193.160:3500/todo/reorder', { newOrder: updatedData });
             setData(updatedData);
         } catch (error) {
-            console.error(error);
-            setData(prevData);
+            console.error("Error reordering todos:", error);
+            setData(data); // Revert on error
         }
     };
 
     const clearComplete = async () => {
         try {
-            let response = await axios.delete("http://3.135.193.160:3500/todo")
+            let response = await axios.delete("http://3.135.193.160:3500/todo/clear-completed")
             if(response.data.status){
                 setData(response.data.data)
             }   

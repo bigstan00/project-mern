@@ -8,9 +8,9 @@
 + LOG_INTERVAL=300
 + last_log_time=0
 + true
-+ docker compose -f /home/ubuntu/project-mern/docker-compose.yaml ps
-+ grep backend
-+ wc -l
++ + grep backend
+docker compose+  -f /home/ubuntu/project-mern/docker-compose.yaml ps
+wc -l
 stat /home/ubuntu/project-mern/docker-compose.yaml: no such file or directory
 + current_instances=0
 + get_cpu_usage
