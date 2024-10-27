@@ -11,7 +11,7 @@ function Todos({data, setData}) {
 
     const Fetch = async () => {
         setLoading(true);
-        const todo = await axios.get("http://18.117.73.3:3500/todo")
+        const todo = await axios.get("http://3.135.193.160:3500/todo")
         let todoItem = await todo.data
         setLoading(false);
         return todoItem
@@ -34,7 +34,7 @@ function Todos({data, setData}) {
         const prevData = [...data];
 
         try {
-            await axios.post("http://18.117.73.3:3500/todo", {newOrder: updatedData})
+            await axios.post("http://3.135.193.160:3500/todo", {newOrder: updatedData})
             setData(updatedData);
         } catch (error) {
             console.error(error);
@@ -44,7 +44,7 @@ function Todos({data, setData}) {
 
     const clearComplete = async () => {
         try {
-            let response = await axios.delete("http://18.117.73.3:3500/todo")
+            let response = await axios.delete("http://3.135.193.160:3500/todo")
             if(response.data.status){
                 setData(response.data.data)
             }   
