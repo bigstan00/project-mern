@@ -40,8 +40,8 @@ jobs:
 
       - name: Push Frontend Image to Docker Hub
         run: |
-          docker tag frontend:1 bigstan00/frontend:1
-          docker push bigstan00/frontend:1
+          docker tag project-mern-frontend:latest bigstan00/project-mern-frontend:latest
+          docker push bigstan00/project-mern-frontend:latest
 
       - name: Build Backend Image
         run: |
@@ -50,8 +50,8 @@ jobs:
 
       - name: Push Backend Image to Docker Hub
         run: |
-          docker tag backend:1 bigstan00/backend:1
-          docker push bigstan00/backend:1
+          docker tag project-mern-backend bigstan00/project-mern-backend:latest
+          docker push bigstan00/project-mern-backend:latest
 
       - name: Verify images
         run: |
