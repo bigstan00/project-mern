@@ -267,7 +267,7 @@ jobs:
 
           # Fetch Instance ID
           INSTANCE_ID=$(aws ec2 describe-instances \
-            --filters "Name=tag:Name,Values=Your-Instance-Name" \
+            --filters "Name=tag:Name,Values=mern-server" \
             --query "Reservations[*].Instances[*].InstanceId" --output text)
 
           if [ -z "$INSTANCE_ID" ]; then
