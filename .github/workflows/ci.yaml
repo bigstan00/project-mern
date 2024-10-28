@@ -152,7 +152,7 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: ubuntu:latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout code
@@ -226,7 +226,6 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           script: |
-            # Check if Docker is installed
             if ! command -v docker &> /dev/null; then
               sudo apt-get update
               sudo apt-get install -y docker.io docker-compose git
@@ -236,25 +235,33 @@ jobs:
               echo "Docker already installed, skipping."
             fi
 
-            # Clone or update project code
             if [ ! -d "/home/ubuntu/project-mern" ]; then
               git clone https://github.com/bigstan00/project-mern
             else
               cd /home/ubuntu/project-mern && git pull
             fi
 
-            # Run Docker Compose
             cd /home/ubuntu/project-mern
             docker compose down
             docker compose up -d --build
 
-            # Check if the cron job already exists
             if ! crontab -l | grep -q 'backend/scale.sh'; then
               (crontab -l; echo "*/5 * * * * /home/ubuntu/project-mern/backend/scale.sh >> /home/ubuntu/project-mern/cron.log 2>&1") | crontab -
             else
               echo "Cron job already configured, skipping."
             fi
 
+      - name: Allocate and Associate Elastic IP
+        run: |
+          # Allocate Elastic IP
+          aws ec2 allocate-address --domain vpc --region us-east-2 --output json > eip.json
+          ELASTIC_IP=$(jq -r '.PublicIp' eip.json)
+          ALLOC_ID=$(jq -r '.AllocationId' eip.json)
+
+          # Associate Elastic IP with EC2 Instance
+          INSTANCE_ID=$(aws ec2 describe-instances --filters "Name=ip-address,Values=${{ secrets.EC2_HOST }}" \
+            --query "Reservations[*].Instances[*].InstanceId" --output text)
+          aws ec2 associate-address --instance-id $INSTANCE_ID --allocation-id $ALLOC_ID --region us-east-2
 
       - name: Update Route 53 Record
         run: |
