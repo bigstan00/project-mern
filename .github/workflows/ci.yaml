@@ -231,8 +231,6 @@ jobs:
               sudo apt-get install -y docker.io docker-compose git
               sudo systemctl enable docker
               sudo systemctl start docker
-            else
-              echo "Docker already installed, skipping."
             fi
 
             if [ ! -d "/home/ubuntu/project-mern" ]; then
@@ -247,8 +245,6 @@ jobs:
 
             if ! crontab -l | grep -q 'backend/scale.sh'; then
               (crontab -l; echo "*/5 * * * * /home/ubuntu/project-mern/backend/scale.sh >> /home/ubuntu/project-mern/cron.log 2>&1") | crontab -
-            else
-              echo "Cron job already configured, skipping."
             fi
 
       - name: Configure AWS Credentials
@@ -260,18 +256,15 @@ jobs:
 
       - name: Allocate and Associate Elastic IP
         run: |
-          # Allocate Elastic IP
           aws ec2 allocate-address --domain vpc --region us-east-2 --output json > eip.json
           ELASTIC_IP=$(jq -r '.PublicIp' eip.json)
           ALLOC_ID=$(jq -r '.AllocationId' eip.json)
 
-          # Validate the Elastic IP
-          if [ -z "$ELASTIC_IP" ]; then
+          if [ -z "$ELASTIC_IP" ] || [ "$ELASTIC_IP" == "null" ]; then
             echo "Error: No Elastic IP allocated." && exit 1
           fi
           echo "Allocated Elastic IP: $ELASTIC_IP"
 
-          # Fetch Instance ID
           INSTANCE_ID=$(aws ec2 describe-instances \
             --filters "Name=tag:Name,Values=mern-server" \
             --query "Reservations[*].Instances[*].InstanceId" --output text)
@@ -280,12 +273,11 @@ jobs:
             echo "Error: Unable to find instance with the given tag." && exit 1
           fi
 
-          # Associate Elastic IP
-          aws ec2 associate-address --instance-id $INSTANCE_ID --allocation-id $ALLOC_ID --region us-east-2
+          aws ec2 associate-address --instance-id $INSTANCE_ID --allocation-id $ALLOC_ID --region us-east-2 || exit 1
+          echo "Elastic IP associated with instance: $INSTANCE_ID"
 
       - name: Update Route 53 Record
         run: |
-          # Prepare Route 53 change batch
           cat << EOF > route53.json
           {
             "Comment": "Update record to reflect new Elastic IP",
@@ -301,14 +293,16 @@ jobs:
           }
           EOF
 
-          # Validate Elastic IP before proceeding
           if [[ ! "$ELASTIC_IP" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "Error: Allocated Elastic IP is not a valid IPv4 address: $ELASTIC_IP" && exit 1
           fi
 
-          # Update the Route 53 record
           aws route53 change-resource-record-sets --hosted-zone-id ${{ secrets.AWS_HOSTED_ZONE_ID }} \
-            --change-batch file://route53.json
+            --change-batch file://route53.json || exit 1
+
+          echo "Route 53 record updated with Elastic IP: $ELASTIC_IP"
 
       - name: Verify Route 53 Record
-        run: nslookup ${{ secrets.AWS_DOMAIN_NAME }}
+        run: |
+          nslookup ${{ secrets.AWS_DOMAIN_NAME }} || exit 1
+          echo "Route 53 DNS verification completed."
