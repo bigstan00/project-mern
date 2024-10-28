@@ -8,13 +8,23 @@
 + LOG_INTERVAL=300
 + last_log_time=0
 + true
-+ + grep backend
-docker compose+  -f /home/ubuntu/project-mern/docker-compose.yaml ps
-wc -l
+++ docker compose -f /home/ubuntu/project-mern/docker-compose.yaml ps
+++ grep backend
+++ wc -l
 stat /home/ubuntu/project-mern/docker-compose.yaml: no such file or directory
 + current_instances=0
-+ get_cpu_usage
-+ docker compose -f /home/ubuntu/project-mern/docker-compose.yaml ps -q backend
+++ get_cpu_usage
++++ docker compose -f /home/ubuntu/project-mern/docker-compose.yaml ps -q backend
 stat /home/ubuntu/project-mern/docker-compose.yaml: no such file or directory
-+ container_ids=
-+ cpu_usage=
+++ container_ids=
+++ '[' -z '' ']'
+++ echo 0
+++ return
++ cpu_usage=0
+++ date +%s
++ current_time=1730145601
++ ((  current_time - last_log_time >= LOG_INTERVAL  ))
++ echo 'Service: backend, Instances: 0, CPU: 0%'
++ tee -a /home/ubuntu/project-mern/backend/scale.log
+tee: /home/ubuntu/project-mern/backend/scale.log: No such file or directory
+Service: backend, Instances: 0, CPU: 0%
