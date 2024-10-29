@@ -8,7 +8,6 @@ on:
 jobs:
   deploy_frontend:
     runs-on: self-hosted
-
     steps:
       - name: SSH to Frontend EC2 and Deploy
         uses: appleboy/ssh-action@v0.1.5
@@ -18,13 +17,13 @@ jobs:
           key: ${{ secrets.FRONTEND_EC2_SSH_KEY }}
           port: 22
           script: |
-            # Check if Docker and NGINX are installed
+            # Check if Docker is installed
             if ! command -v docker &>/dev/null; then
               echo "Installing Docker..."
               sudo apt-get update
               sudo apt-get install -y ca-certificates curl gnupg
               sudo install -m 0755 -d /etc/apt/keyrings
-              curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc
+              curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc > /dev/null
               sudo chmod a+r /etc/apt/keyrings/docker.asc
               echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
               https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
@@ -34,26 +33,34 @@ jobs:
               sudo systemctl enable docker --now
             fi
 
+            # Add 'ubuntu' user to Docker group if not already added
+            if ! groups ubuntu | grep -q "\bdocker\b"; then
+              echo "Adding 'ubuntu' user to the Docker group..."
+              sudo usermod -aG docker ubuntu
+              echo "User 'ubuntu' added to the Docker group."
+            fi
+
+            # Check if NGINX is installed
             if ! command -v nginx &>/dev/null; then
               echo "Installing NGINX..."
               sudo apt-get update && sudo apt-get install -y nginx
               sudo systemctl enable nginx --now
             fi
 
-            # Clone or pull latest frontend code
+            # Clone or pull the latest frontend code
             cd /home/ubuntu
             [ ! -d "frontend" ] && git clone https://github.com/bigstan00/project-mern frontend || (cd frontend && git pull)
             cd frontend
 
             # Deploy frontend using Docker Compose
-            docker compose down || echo "No running containers to stop"
-            docker compose up -d --build || { echo "Failed to start containers"; exit 1; }
+            sudo docker compose down || echo "No running containers to stop"
+            sudo docker compose up -d --build || { echo "Failed to start containers"; exit 1; }
 
-            docker ps
+            # List running containers
+            sudo docker ps
 
   deploy_backend:
     runs-on: self-hosted
-
     steps:
       - name: SSH to Backend EC2 via Bastion and Deploy
         uses: appleboy/ssh-action@v0.1.5
@@ -64,12 +71,12 @@ jobs:
           port: 22
           script: |
             ssh -o StrictHostKeyChecking=no -i ${{ secrets.BACKEND_SSH_KEY }} ubuntu@${{ secrets.BACKEND_PRIVATE_IP }} << 'EOF'
-              # Check if Docker and NGINX are installed
+              # Check if Docker is installed
               if ! command -v docker &>/dev/null; then
                 echo "Installing Docker..."
                 sudo apt-get update && sudo apt-get install -y ca-certificates curl gnupg
                 sudo install -m 0755 -d /etc/apt/keyrings
-                curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc
+                curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc > /dev/null
                 sudo chmod a+r /etc/apt/keyrings/docker.asc
                 echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
                 https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
@@ -78,6 +85,14 @@ jobs:
                 sudo systemctl enable docker --now
               fi
 
+              # Add 'ubuntu' user to Docker group if not already added
+              if ! groups ubuntu | grep -q "\bdocker\b"; then
+                echo "Adding 'ubuntu' user to the Docker group..."
+                sudo usermod -aG docker ubuntu
+                echo "User 'ubuntu' added to the Docker group."
+              fi
+
+              # Check if NGINX is installed
               if ! command -v nginx &>/dev/null; then
                 echo "Installing NGINX..."
                 sudo apt-get update && sudo apt-get install -y nginx
@@ -90,15 +105,15 @@ jobs:
               cd backend
 
               # Deploy backend using Docker Compose
-              docker compose down || echo "No running containers to stop"
-              docker compose up -d --build || { echo "Failed to start containers"; exit 1; }
+              sudo docker compose down || echo "No running containers to stop"
+              sudo docker compose up -d --build || { echo "Failed to start containers"; exit 1; }
 
               # Configure cron job for auto-scaling
               CRON_JOB="*/5 * * * * /home/ubuntu/backend/scale.sh >> /home/ubuntu/cron.log 2>&1"
               (crontab -l 2>/dev/null | grep -Fxq "$CRON_JOB") || (crontab -l 2>/dev/null; echo "$CRON_JOB") | crontab -
 
               # Verify running containers and cron job
-              docker ps
+              sudo docker ps
               crontab -l
             EOF
 
