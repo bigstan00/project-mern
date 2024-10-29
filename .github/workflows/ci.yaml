@@ -1,157 +1,15 @@
-# name: CI Pipeline
-
-# on:  
-#   push:  # Trigger on push events to the master branch
-#     branches:
-#       - master  # Adjust to your main branch (e.g., main or master)
-#   pull_request:  # Trigger on pull requests targeting the master branch
-#     branches:
-#       - master
-
-# jobs:
-#   build-and-test:
-#     runs-on: self-hosted
-
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v2
-
-#       - name: Set up Docker Buildx
-#         uses: docker/setup-buildx-action@v1
-
-#       - name: Cache Docker layers
-#         uses: actions/cache@v2
-#         with:
-#           path: /tmp/.buildx-cache
-#           key: ${{ runner.os }}-buildx-${{ github.sha }}
-#           restore-keys: |
-#             ${{ runner.os }}-buildx-
-
-#       - name: Log into Docker Hub
-#         uses: docker/login-action@v3
-#         with:
-#           username: ${{ secrets.DOCKER_USERNAME }}
-#           password: ${{ secrets.DOCKER_TOKEN }}
-
-#       - name: Build Frontend Image
-#         run: |
-#           cd frontend
-#           docker build -t frontend:1 .
-
-#       - name: Push Frontend Image to Docker Hub
-#         run: |
-#           docker tag project-mern-frontend:latest bigstan00/project-mern-frontend:latest
-#           docker push bigstan00/project-mern-frontend:latest
-
-#       - name: Build Backend Image
-#         run: |
-#           cd backend
-#           docker build -t backend:1 .
-
-#       - name: Push Backend Image to Docker Hub
-#         run: |
-#           docker tag project-mern-backend bigstan00/project-mern-backend:latest
-#           docker push bigstan00/project-mern-backend:latest
-
-#       - name: Verify images
-#         run: |
-#           docker images
-
-#       - name: Run Docker Compose Locally
-#         run: |
-#           docker compose down --remove-orphans  # Ensure no conflicting containers
-#           docker compose up -d  # Start the entire stack
-
-#       - name: Verify Containers Are Running
-#         run: |
-#           docker ps
-
-#       - name: Check Prometheus Targets
-#         run: |
-#           curl -f http://localhost:9090/targets || exit 1  # Validate Prometheus is scraping
-
-#       - name: Check Alertmanager
-#         run: |
-#           curl -f http://localhost:9093 || exit 1
-
-#       - name: Check NGINX Configuration
-#         run: |
-#           docker exec nginx-cont nginx -t  # Validate NGINX config
-
-#       - name: Check Node Exporter
-#         run: |
-#           curl -f http://localhost:9100 || exit 1
-
-#       - name: SSH to EC2 and Deploy
-#         uses: appleboy/ssh-action@v0.1.5
-#         with:
-#           host: ${{ secrets.EC2_HOST }}
-#           username: ubuntu
-#           key: ${{ secrets.EC2_SSH_KEY }}
-#           port: 22
-#           script: |
-#             # Install Docker and Docker Compose
-#             sudo apt-get update
-#             sudo apt-get install -y ca-certificates curl
-
-#             # Add Docker's official GPG key
-#             sudo install -m 0755 -d /etc/apt/keyrings
-#             sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-#             sudo chmod a+r /etc/apt/keyrings/docker.asc
-
-#             # Add Docker repository to sources
-#             echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
-#             https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-#             sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-#             sudo apt-get update
-#             sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-#             # Enable Docker and add user to the Docker group
-#             sudo systemctl enable docker
-#             sudo systemctl start docker
-#             sudo usermod -aG docker $USER
-
-#             # Clone or pull the latest project code
-#             if [ ! -d "/home/ubuntu/project-mern" ]; then
-#               git clone https://github.com/bigstan00/project-mern
-#             else
-#               cd /home/ubuntu/project-mern && git pull
-#             fi
-
-#             # Navigate to the project directory
-#             cd /home/ubuntu/project-mern
-
-#             # Stop any running containers
-#             docker compose down
-
-#             # Build and start containers in detached mode
-#             docker compose up -d --build
-            
-#             # Setup cronjob to trigger auto-scaling
-#             (crontab -l ; echo "*/5 * * * * /home/ubuntu/project-mern/backend/scale.sh >> /home/ubuntu/project-mern/cron.log 2>&1") | crontab -
-
-#             # Verify cronjob
-#             crontab -l  
-            
-#             # Verify the running containers
-#             docker ps
-
-
-#           debug: true  # Enable debug logs
-
 name: CI Pipeline
 
 on:  
-  push:
+  push:  # Trigger on push events to the master branch
     branches:
-      - master
-  pull_request:
+      - master  # Adjust to your main branch (e.g., main or master)
+  pull_request:  # Trigger on pull requests targeting the master branch
     branches:
       - master
 
 jobs:
-  build-and-deploy:
+  build-and-test:
     runs-on: self-hosted
 
     steps:
@@ -175,100 +33,77 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
-      - name: Build and Push Frontend Image
+      - name: Build Frontend Image
         run: |
           cd frontend
           docker build -t frontend:1 .
-          docker tag frontend:1 bigstan00/project-mern-frontend:latest
-          docker push bigstan00/project-mern-frontend:latest
 
-      - name: Build and Push Backend Image
+      - name: Push Frontend Image to Docker Hub
+        run: |
+          IMAGE_NAME="bigstan00/project-mern-frontend"
+          TAG="latest"
+
+          # Check if the image with the latest tag already exists on Docker Hub
+          EXISTS=$(curl -s -o /dev/null -w "%{http_code}" \
+            https://hub.docker.com/v2/repositories/$IMAGE_NAME/tags/$TAG)
+
+          if [ "$EXISTS" -eq 200 ]; then
+            echo "Frontend image $IMAGE_NAME:$TAG already exists. Skipping push."
+            exit 0
+          else
+            echo "Frontend image not found. Pushing to Docker Hub..."
+            docker tag frontend:1 $IMAGE_NAME:$TAG
+            docker push $IMAGE_NAME:$TAG
+          fi
+
+      - name: Build Backend Image
         run: |
           cd backend
           docker build -t backend:1 .
-          docker tag backend:1 bigstan00/project-mern-backend:latest
-          docker push bigstan00/project-mern-backend:latest
 
-      - name: Verify Docker Images
-        run: docker images
+      - name: Push Backend Image to Docker Hub
+        run: |
+          IMAGE_NAME="bigstan00/project-mern-backend"
+          TAG="latest"
+
+          # Check if the image with the latest tag already exists on Docker Hub
+          EXISTS=$(curl -s -o /dev/null -w "%{http_code}" \
+            https://hub.docker.com/v2/repositories/$IMAGE_NAME/tags/$TAG)
+
+          if [ "$EXISTS" -eq 200 ]; then
+            echo "Backend image $IMAGE_NAME:$TAG already exists. Skipping push."
+            exit 0
+          else
+            echo "Backend image not found. Pushing to Docker Hub..."
+            docker tag backend:1 $IMAGE_NAME:$TAG
+            docker push $IMAGE_NAME:$TAG
+          fi
+
+      - name: Verify images
+        run: |
+          docker images
 
       - name: Run Docker Compose Locally
         run: |
-          docker compose down --remove-orphans
-          docker compose up -d
+          docker compose down --remove-orphans  # Ensure no conflicting containers
+          docker compose up -d  # Start the entire stack
 
-      - name: Verify Containers
-        run: docker ps
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
-
-      - name: Allocate and Associate Elastic IP
-        id: allocate_eip
+      - name: Verify Containers Are Running
         run: |
-          INSTANCE_ID=$(aws ec2 describe-instances \
-            --filters "Name=tag:Name,Values=mern-server" \
-            --query "Reservations[*].Instances[*].InstanceId" --output text)
+          docker ps
 
-          if [ -z "$INSTANCE_ID" ]; then
-            echo "Error: Unable to find instance." && exit 1
-          fi
-
-          CURRENT_IP=$(aws ec2 describe-addresses \
-            --filters "Name=instance-id,Values=$INSTANCE_ID" \
-            --query "Addresses[*].PublicIp" --output text)
-
-          if [ -n "$CURRENT_IP" ]; then
-            echo "Elastic IP already associated: $CURRENT_IP"
-            echo "::set-output name=elastic_ip::$CURRENT_IP"
-            exit 0
-          fi
-
-          echo "Allocating a new Elastic IP..."
-          aws ec2 allocate-address --domain vpc --region us-east-2 --output json > eip.json
-          ELASTIC_IP=$(jq -r '.PublicIp' eip.json)
-          ALLOC_ID=$(jq -r '.AllocationId' eip.json)
-
-          aws ec2 associate-address --instance-id $INSTANCE_ID --allocation-id $ALLOC_ID --region us-east-2
-
-          echo "::set-output name=elastic_ip::$ELASTIC_IP"
-
-      - name: Validate Elastic IP
+      - name: Check Prometheus Targets
         run: |
-          ELASTIC_IP="${{ steps.allocate_eip.outputs.elastic_ip }}"
-          echo "Elastic IP to be used: $ELASTIC_IP"
-          if [[ -z "$ELASTIC_IP" || ! "$ELASTIC_IP" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "Error: Invalid Elastic IP: '$ELASTIC_IP'" && exit 1
-          fi
+          curl -f http://localhost:9090/targets || exit 1  # Validate Prometheus is scraping
 
-      - name: Update Route 53 Record
+      - name: Check Alertmanager
         run: |
-          ELASTIC_IP="${{ steps.allocate_eip.outputs.elastic_ip }}"
-          cat << EOF > route53.json
-          {
-            "Comment": "Update record to reflect new Elastic IP",
-            "Changes": [{
-              "Action": "UPSERT",
-              "ResourceRecordSet": {
-                "Name": "${{ secrets.AWS_DOMAIN_NAME }}",
-                "Type": "A",
-                "TTL": 300,
-                "ResourceRecords": [{ "Value": "$ELASTIC_IP" }]
-              }
-            }]
-          }
-          EOF
+          curl -f http://localhost:9093 || exit 1
 
-          echo "Updating Route 53 DNS record with Elastic IP: $ELASTIC_IP"
-          aws route53 change-resource-record-sets --hosted-zone-id ${{ secrets.AWS_HOSTED_ZONE_ID }} \
-            --change-batch file://route53.json || exit 1
-
-      - name: Verify Route 53 Record Update
+      - name: Check NGINX Configuration
         run: |
-          nslookup ${{ secrets.AWS_DOMAIN_NAME }} || exit 1
-          echo "Route 53 record successfully updated with IP: $ELASTIC_IP"
+          docker exec nginx-cont nginx -t  # Validate NGINX config
 
+      - name: Check Node Exporter
+        run: |
+          curl -f http://localhost:9100 || exit 1
