@@ -22,7 +22,7 @@ stat /home/ubuntu/project-mern/docker-compose.yaml: no such file or directory
 ++ return
 + cpu_usage=0
 ++ date +%s
-+ current_time=1730196002
++ current_time=1730199601
 + ((  current_time - last_log_time >= LOG_INTERVAL  ))
 + echo 'Service: backend, Instances: 0, CPU: 0%'
 + tee -a /home/ubuntu/project-mern/backend/scale.log
