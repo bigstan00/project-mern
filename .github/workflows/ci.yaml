@@ -151,7 +151,7 @@ on:
       - master
 
 jobs:
-  build-and-test:
+  build-and-deploy:
     runs-on: self-hosted
 
     steps:
@@ -175,27 +175,21 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
-      - name: Build Frontend Image
+      - name: Build and Push Frontend Image
         run: |
           cd frontend
           docker build -t frontend:1 .
-
-      - name: Push Frontend Image to Docker Hub
-        run: |
           docker tag frontend:1 bigstan00/project-mern-frontend:latest
           docker push bigstan00/project-mern-frontend:latest
 
-      - name: Build Backend Image
+      - name: Build and Push Backend Image
         run: |
           cd backend
           docker build -t backend:1 .
-
-      - name: Push Backend Image to Docker Hub
-        run: |
           docker tag backend:1 bigstan00/project-mern-backend:latest
           docker push bigstan00/project-mern-backend:latest
 
-      - name: Verify images
+      - name: Verify Docker Images
         run: docker images
 
       - name: Run Docker Compose Locally
@@ -203,49 +197,8 @@ jobs:
           docker compose down --remove-orphans
           docker compose up -d
 
-      - name: Verify Containers Are Running
+      - name: Verify Containers
         run: docker ps
-
-      - name: Check Prometheus Targets
-        run: curl -f http://localhost:9090/targets || exit 1
-
-      - name: Check Alertmanager
-        run: curl -f http://localhost:9093 || exit 1
-
-      - name: Check NGINX Configuration
-        run: docker exec nginx-cont nginx -t
-
-      - name: Check Node Exporter
-        run: curl -f http://localhost:9100 || exit 1
-
-      - name: SSH to EC2 and Deploy
-        uses: appleboy/ssh-action@v0.1.5
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ubuntu
-          key: ${{ secrets.EC2_SSH_KEY }}
-          port: 22
-          script: |
-            if ! command -v docker &> /dev/null; then
-              sudo apt-get update
-              sudo apt-get install -y docker.io docker-compose git
-              sudo systemctl enable docker
-              sudo systemctl start docker
-            fi
-
-            if [ ! -d "/home/ubuntu/project-mern" ]; then
-              git clone https://github.com/bigstan00/project-mern
-            else
-              cd /home/ubuntu/project-mern && git pull
-            fi
-
-            cd /home/ubuntu/project-mern
-            docker compose down
-            docker compose up -d --build
-
-            if ! crontab -l | grep -q 'backend/scale.sh'; then
-              (crontab -l; echo "*/5 * * * * /home/ubuntu/project-mern/backend/scale.sh >> /home/ubuntu/project-mern/cron.log 2>&1") | crontab -
-            fi
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -254,81 +207,68 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Check or Allocate Elastic IP
+      - name: Allocate and Associate Elastic IP
+        id: allocate_eip
         run: |
           INSTANCE_ID=$(aws ec2 describe-instances \
             --filters "Name=tag:Name,Values=mern-server" \
             --query "Reservations[*].Instances[*].InstanceId" --output text)
 
           if [ -z "$INSTANCE_ID" ]; then
-            echo "Error: Unable to find instance with the given tag." && exit 1
+            echo "Error: Unable to find instance." && exit 1
           fi
 
-          # Use the EC2_HOST secret if available
-          ELASTIC_IP="${{ secrets.EC2_HOST }}"
+          CURRENT_IP=$(aws ec2 describe-addresses \
+            --filters "Name=instance-id,Values=$INSTANCE_ID" \
+            --query "Addresses[*].PublicIp" --output text)
 
-          if [ -n "$ELASTIC_IP" ]; then
-            echo "Using Elastic IP from secrets: $ELASTIC_IP"
-          else
-            echo "No Elastic IP from secrets. Checking AWS for existing IP..."
-
-            # Check if instance has an existing Elastic IP
-            ELASTIC_IP=$(aws ec2 describe-addresses \
-              --filters "Name=instance-id,Values=$INSTANCE_ID" \
-              --query "Addresses[*].PublicIp" --output text)
-
-            if [ -n "$ELASTIC_IP" ]; then
-              echo "Elastic IP already associated: $ELASTIC_IP. Skipping allocation."
-              exit 0
-            fi
-
-            echo "Allocating a new Elastic IP..."
-            aws ec2 allocate-address --domain vpc --region us-east-2 --output json > eip.json
-            ELASTIC_IP=$(jq -r '.PublicIp' eip.json)
-            ALLOC_ID=$(jq -r '.AllocationId' eip.json)
-
-            if [ -z "$ELASTIC_IP" ] || [ "$ELASTIC_IP" == "null" ]; then
-              echo "Error: No Elastic IP allocated." && exit 1
-            fi
-
-            echo "Allocated Elastic IP: $ELASTIC_IP"
-
-            aws ec2 associate-address --instance-id $INSTANCE_ID --allocation-id $ALLOC_ID --region us-east-2 || exit 1
-            echo "Elastic IP associated with instance: $INSTANCE_ID"
+          if [ -n "$CURRENT_IP" ]; then
+            echo "Elastic IP already associated: $CURRENT_IP"
+            echo "::set-output name=elastic_ip::$CURRENT_IP"
+            exit 0
           fi
 
-          echo "Elastic IP to be used: $ELASTIC_IP"
+          echo "Allocating a new Elastic IP..."
+          aws ec2 allocate-address --domain vpc --region us-east-2 --output json > eip.json
+          ELASTIC_IP=$(jq -r '.PublicIp' eip.json)
+          ALLOC_ID=$(jq -r '.AllocationId' eip.json)
 
-      - name: Validate Elastic IP Before Route 53 Update
+          aws ec2 associate-address --instance-id $INSTANCE_ID --allocation-id $ALLOC_ID --region us-east-2
+
+          echo "::set-output name=elastic_ip::$ELASTIC_IP"
+
+      - name: Validate Elastic IP
         run: |
-            echo "Elastic IP to be used: $ELASTIC_IP"
-            if [[ -z "$ELASTIC_IP" || ! "$ELASTIC_IP" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-              echo "Error: Invalid Elastic IP: '$ELASTIC_IP'" && exit 1
-            fi
+          ELASTIC_IP="${{ steps.allocate_eip.outputs.elastic_ip }}"
+          echo "Elastic IP to be used: $ELASTIC_IP"
+          if [[ -z "$ELASTIC_IP" || ! "$ELASTIC_IP" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Error: Invalid Elastic IP: '$ELASTIC_IP'" && exit 1
+          fi
 
       - name: Update Route 53 Record
         run: |
-            cat << EOF > route53.json
-            {
-              "Comment": "Update record to reflect new Elastic IP",
-              "Changes": [{
-                "Action": "UPSERT",
-                "ResourceRecordSet": {
-                  "Name": "${{ secrets.AWS_DOMAIN_NAME }}",
-                  "Type": "A",
-                  "TTL": 300,
-                  "ResourceRecords": [{ "Value": "$ELASTIC_IP" }]
-                }
-              }]
-            }
-            EOF
+          ELASTIC_IP="${{ steps.allocate_eip.outputs.elastic_ip }}"
+          cat << EOF > route53.json
+          {
+            "Comment": "Update record to reflect new Elastic IP",
+            "Changes": [{
+              "Action": "UPSERT",
+              "ResourceRecordSet": {
+                "Name": "${{ secrets.AWS_DOMAIN_NAME }}",
+                "Type": "A",
+                "TTL": 300,
+                "ResourceRecords": [{ "Value": "$ELASTIC_IP" }]
+              }
+            }]
+          }
+          EOF
 
-            echo "Updating Route 53 DNS record with Elastic IP: $ELASTIC_IP"
-
-            aws route53 change-resource-record-sets --hosted-zone-id ${{ secrets.AWS_HOSTED_ZONE_ID }} \
-              --change-batch file://route53.json || exit 1
+          echo "Updating Route 53 DNS record with Elastic IP: $ELASTIC_IP"
+          aws route53 change-resource-record-sets --hosted-zone-id ${{ secrets.AWS_HOSTED_ZONE_ID }} \
+            --change-batch file://route53.json || exit 1
 
       - name: Verify Route 53 Record Update
         run: |
-            nslookup ${{ secrets.AWS_DOMAIN_NAME }} || exit 1
-            echo "Route 53 record successfully updated with IP: $ELASTIC_IP"
+          nslookup ${{ secrets.AWS_DOMAIN_NAME }} || exit 1
+          echo "Route 53 record successfully updated with IP: $ELASTIC_IP"
+
