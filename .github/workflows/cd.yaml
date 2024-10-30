@@ -239,14 +239,26 @@ jobs:
               sudo apt-get update && sudo apt-get install -y nginx
               sudo systemctl enable nginx --now
             fi
+
             # Clone or pull the latest frontend code
-            cd /home/ubuntu
-            [ ! -d "frontend" ] && git clone https://github.com/bigstan00/project-mern frontend || (cd frontend && git pull)
-            cd frontend
-            rm -rf backend
-            # Deploy frontend using Docker Compose
-            sudo docker compose down || echo "No running containers to stop"
-            sudo docker compose up -d --build || { echo "Failed to start containers"; exit 1; }
+              cd /home/ubuntu
+              if [ -d "frontend" ]; then
+              echo "Frontend directory exists. Pulling the latest changes..."
+              cd frontend && git pull
+              else
+              echo "Cloning frontend repository..."
+              git clone https://github.com/bigstan00/project-mern frontend
+              cd frontend
+            fi
+
+            # Navigate to where docker-compose.yml is located
+            cd frontend  # Adjust path if needed (e.g., remove second 'frontend' if not necessary)
+
+            # Start frontend containers
+              echo "Starting frontend containers..."
+              sudo docker compose down || echo "No running containers to stop"
+              sudo docker compose up -d --build || { echo "Failed to start containers"; exit 1; }
+
             # List running containers
             sudo docker ps
   deploy_backend:
