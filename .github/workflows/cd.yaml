@@ -254,6 +254,78 @@ jobs:
             # List running containers
             sudo docker ps
 
+            - name: Configure AWS Credentials
+            uses: aws-actions/configure-aws-credentials@v1
+            with:
+              aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+              aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+              aws-region: ${{ secrets.AWS_REGION }}
+    
+      - name: Allocate and Associate Elastic IP
+        id: allocate_eip
+        run: |
+              INSTANCE_ID=$(aws ec2 describe-instances \
+                --filters "Name=tag:Name,Values=mern-server-frontend" \
+                --query "Reservations[*].Instances[*].InstanceId" --output text)
+    
+              if [ -z "$INSTANCE_ID" ]; then
+                echo "Error: Unable to find instance." && exit 1
+              fi
+    
+              CURRENT_IP=$(aws ec2 describe-addresses \
+                --filters "Name=instance-id,Values=$INSTANCE_ID" \
+                --query "Addresses[*].PublicIp" --output text)
+    
+              if [ -n "$CURRENT_IP" ]; then
+                echo "Elastic IP already associated: $CURRENT_IP"
+                echo "::set-output name=elastic_ip::$CURRENT_IP"
+                exit 0
+              fi
+    
+              echo "Allocating a new Elastic IP..."
+              aws ec2 allocate-address --domain vpc --region us-east-2 --output json > eip.json
+              ELASTIC_IP=$(jq -r '.PublicIp' eip.json)
+              ALLOC_ID=$(jq -r '.AllocationId' eip.json)
+    
+              aws ec2 associate-address --instance-id $INSTANCE_ID --allocation-id $ALLOC_ID --region us-east-2
+    
+              echo "::set-output name=elastic_ip::$ELASTIC_IP"
+    
+      - name: Validate Elastic IP
+        run: |
+              ELASTIC_IP="${{ steps.allocate_eip.outputs.elastic_ip }}"
+              echo "Elastic IP to be used: $ELASTIC_IP"
+              if [[ -z "$ELASTIC_IP" || ! "$ELASTIC_IP" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+                echo "Error: Invalid Elastic IP: '$ELASTIC_IP'" && exit 1
+              fi
+    
+      - name: Update Route 53 Record
+        run: |
+              ELASTIC_IP="${{ steps.allocate_eip.outputs.elastic_ip }}"
+              cat << EOF > route53.json
+              {
+                "Comment": "Update record to reflect new Elastic IP",
+                "Changes": [{
+                  "Action": "UPSERT",
+                  "ResourceRecordSet": {
+                    "Name": "${{ secrets.AWS_DOMAIN_NAME }}",
+                    "Type": "A",
+                    "TTL": 300,
+                    "ResourceRecords": [{ "Value": "$ELASTIC_IP" }]
+                  }
+                }]
+              }
+              EOF
+    
+              aws route53 change-resource-record-sets --hosted-zone-id ${{ secrets.AWS_HOSTED_ZONE_ID }} \
+                --change-batch file://route53.json
+    
+      - name: Verify Route 53 Record Update
+        run: |
+              nslookup ${{ secrets.AWS_DOMAIN_NAME }} || exit 1
+              echo "Route 53 record successfully updated with IP: $ELASTIC_IP"
+    
+
   deploy_backend:
     runs-on: self-hosted
     steps:
@@ -311,73 +383,3 @@ jobs:
             crontab -l
             EOF
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
-
-      - name: Allocate and Associate Elastic IP
-        id: allocate_eip
-        run: |
-          INSTANCE_ID=$(aws ec2 describe-instances \
-            --filters "Name=tag:Name,Values=mern-server-frontend" \
-            --query "Reservations[*].Instances[*].InstanceId" --output text)
-
-          if [ -z "$INSTANCE_ID" ]; then
-            echo "Error: Unable to find instance." && exit 1
-          fi
-
-          CURRENT_IP=$(aws ec2 describe-addresses \
-            --filters "Name=instance-id,Values=$INSTANCE_ID" \
-            --query "Addresses[*].PublicIp" --output text)
-
-          if [ -n "$CURRENT_IP" ]; then
-            echo "Elastic IP already associated: $CURRENT_IP"
-            echo "::set-output name=elastic_ip::$CURRENT_IP"
-            exit 0
-          fi
-
-          echo "Allocating a new Elastic IP..."
-          aws ec2 allocate-address --domain vpc --region us-east-2 --output json > eip.json
-          ELASTIC_IP=$(jq -r '.PublicIp' eip.json)
-          ALLOC_ID=$(jq -r '.AllocationId' eip.json)
-
-          aws ec2 associate-address --instance-id $INSTANCE_ID --allocation-id $ALLOC_ID --region us-east-2
-
-          echo "::set-output name=elastic_ip::$ELASTIC_IP"
-
-      - name: Validate Elastic IP
-        run: |
-          ELASTIC_IP="${{ steps.allocate_eip.outputs.elastic_ip }}"
-          echo "Elastic IP to be used: $ELASTIC_IP"
-          if [[ -z "$ELASTIC_IP" || ! "$ELASTIC_IP" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "Error: Invalid Elastic IP: '$ELASTIC_IP'" && exit 1
-          fi
-
-      - name: Update Route 53 Record
-        run: |
-          ELASTIC_IP="${{ steps.allocate_eip.outputs.elastic_ip }}"
-          cat << EOF > route53.json
-          {
-            "Comment": "Update record to reflect new Elastic IP",
-            "Changes": [{
-              "Action": "UPSERT",
-              "ResourceRecordSet": {
-                "Name": "${{ secrets.AWS_DOMAIN_NAME }}",
-                "Type": "A",
-                "TTL": 300,
-                "ResourceRecords": [{ "Value": "$ELASTIC_IP" }]
-              }
-            }]
-          }
-          EOF
-
-          aws route53 change-resource-record-sets --hosted-zone-id ${{ secrets.AWS_HOSTED_ZONE_ID }} \
-            --change-batch file://route53.json
-
-      - name: Verify Route 53 Record Update
-        run: |
-          nslookup ${{ secrets.AWS_DOMAIN_NAME }} || exit 1
-          echo "Route 53 record successfully updated with IP: $ELASTIC_IP"
