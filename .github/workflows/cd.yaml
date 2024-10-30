@@ -207,13 +207,17 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: SSH to Frontend EC2 and Deploy
-        uses: appleboy/ssh-action@v0.1.5
+        uses: appleboy/ssh-action@v0.1.9  # Update to the latest version
         with:
           host: ${{ secrets.FRONTEND_EC2_HOST }}
           username: ubuntu
           key: ${{ secrets.FRONTEND_EC2_SSH_KEY }}
           port: 22
           script: |
+      - name: Check SSH Connection
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.FRONTEND_EC2_SSH_KEY }} ubuntu@${{ secrets.FRONTEND_EC2_HOST }} "echo 'SSH Connection Successful'" || echo "SSH Connection Failed"
+
             # Check if Docker is installed
             if ! command -v docker &>/dev/null; then
               echo "Installing Docker..."
