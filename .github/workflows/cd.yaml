@@ -242,13 +242,13 @@ jobs:
 
             # Clone or update frontend code
             cd /home/ubuntu
-            if [ -d "frontend" ]; then
-              echo "'frontend' directory found. Pulling latest changes..."
-              cd frontend && git pull || { echo "Git pull failed"; exit 1; }
+            if [ -d "/home/ubuntu/frontend" ]; then
+            echo "Frontend directory exists. Pulling the latest changes..."
+            cd /home/ubuntu/frontend && git pull
             else
-              echo "Cloning frontend repository..."
-              git clone https://github.com/bigstan00/project-mern frontend || { echo "Clone failed"; exit 1; }
-              cd frontend
+            echo "Cloning frontend..."
+            git clone --filter=blob:none --sparse https://github.com/bigstan00/project-mern frontend
+            cd frontend && git sparse-checkout set frontend
             fi
 
             # Deploy frontend using Docker Compose
@@ -296,14 +296,14 @@ jobs:
 
               # Clone or update backend code
               cd /home/ubuntu
-              if [ -d "backend" ]; then
-                echo "'backend' directory found. Pulling latest changes..."
-                cd backend && git pull || { echo "Git pull failed"; exit 1; }
-              else
-                echo "Cloning backend repository..."
-                git clone https://github.com/bigstan00/project-mern backend || { echo "Clone failed"; exit 1; }
-                cd backend
-              fi
+            if [ -d "/home/ubuntu/backend" ]; then
+            echo "Backend directory exists. Pulling the latest changes..."
+            cd /home/ubuntu/backend && git pull
+            else
+            echo "Cloning backend..."
+            git clone --filter=blob:none --sparse https://github.com/bigstan00/project-mern backend
+            cd backend && git sparse-checkout set backend
+            fi
 
               # Deploy backend using Docker Compose
               sudo docker compose down || echo "No running containers to stop"
