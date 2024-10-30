@@ -1,200 +1,3 @@
-# name: CD
-# on:
-#   workflow_run:
-#     workflows: ["CI Pipeline"]
-#     types:
-#       - completed
-
-# jobs:
-#   deploy_frontend:
-#     runs-on: self-hosted
-#     steps:
-#       - name: SSH to Frontend EC2 and Deploy
-#         uses: appleboy/ssh-action@v0.1.5
-#         with:
-#           host: ${{ secrets.FRONTEND_EC2_HOST }}
-#           username: ubuntu
-#           key: ${{ secrets.FRONTEND_EC2_SSH_KEY }}
-#           port: 22
-#           script: |
-#             # Check if Docker is installed
-#             if ! command -v docker &>/dev/null; then
-#               echo "Installing Docker..."
-#               sudo apt-get update
-#               sudo apt-get install -y ca-certificates curl gnupg
-#               sudo install -m 0755 -d /etc/apt/keyrings
-#               curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc > /dev/null
-#               sudo chmod a+r /etc/apt/keyrings/docker.asc
-#               echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
-#               https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-#               sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-#               sudo apt-get update
-#               sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
-#               sudo systemctl enable docker --now
-#             fi
-
-#             # Add 'ubuntu' user to Docker group if not already added
-#             if ! groups ubuntu | grep -q "\bdocker\b"; then
-#               echo "Adding 'ubuntu' user to the Docker group..."
-#               sudo usermod -aG docker ubuntu
-#               echo "User 'ubuntu' added to the Docker group."
-#             fi
-
-#             # Check if NGINX is installed
-#             if ! command -v nginx &>/dev/null; then
-#               echo "Installing NGINX..."
-#               sudo apt-get update && sudo apt-get install -y nginx
-#               sudo systemctl enable nginx --now
-#             fi
-
-#             # Clone or pull the latest frontend code
-#             cd /home/ubuntu
-#             [ ! -d "frontend" ] && git clone https://github.com/bigstan00/project-mern frontend || (cd frontend && git pull)
-#             cd frontend
-
-#             # Deploy frontend using Docker Compose
-#             sudo docker compose down || echo "No running containers to stop"
-#             sudo docker compose up -d --build || { echo "Failed to start containers"; exit 1; }
-
-#             # List running containers
-#             sudo docker ps
-
-#   deploy_backend:
-#     runs-on: self-hosted
-#     steps:
-#     - name: SSH to Backend EC2 via Bastion and Deploy
-#       uses: appleboy/ssh-action@v0.1.5
-#       with:
-#         host: ${{ secrets.BASTION_HOST }}
-#         username: ubuntu
-#         key: ${{ secrets.BASTION_SSH_KEY }}
-#         port: 22
-#         script: |
-#           ssh -o StrictHostKeyChecking=no -A -i /home/ubuntu/stan-keypai.pem ubuntu@${{ secrets.BACKEND_PRIVATE_IP }} << 'EOF'
-#           # Commands to run on the backend instance
-#           cd /home/ubuntu/project-mern/backend
-#           docker-compose down && docker-compose up -d --build
-#           EOF
-
-#               # Check if Docker is installed
-#               if ! command -v docker &>/dev/null; then
-#                 echo "Installing Docker..."
-#                 sudo apt-get update && sudo apt-get install -y ca-certificates curl gnupg
-#                 sudo install -m 0755 -d /etc/apt/keyrings
-#                 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc > /dev/null
-#                 sudo chmod a+r /etc/apt/keyrings/docker.asc
-#                 echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
-#                 https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-#                 sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-#                 sudo apt-get update && sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
-#                 sudo systemctl enable docker --now
-#               fi
-
-#               # Add 'ubuntu' user to Docker group if not already added
-#               if ! groups ubuntu | grep -q "\bdocker\b"; then
-#                 echo "Adding 'ubuntu' user to the Docker group..."
-#                 sudo usermod -aG docker ubuntu
-#                 echo "User 'ubuntu' added to the Docker group."
-#               fi
-
-#               # Check if NGINX is installed
-#               if ! command -v nginx &>/dev/null; then
-#                 echo "Installing NGINX..."
-#                 sudo apt-get update && sudo apt-get install -y nginx
-#                 sudo systemctl enable nginx --now
-#               fi
-
-#               # Clone or pull the latest backend code
-#               cd /home/ubuntu
-#               [ ! -d "backend" ] && git clone https://github.com/bigstan00/project-mern backend || (cd backend && git pull)
-#               cd backend
-
-#               # Deploy backend using Docker Compose
-#               sudo docker compose down || echo "No running containers to stop"
-#               sudo docker compose up -d --build || { echo "Failed to start containers"; exit 1; }
-
-#               # Configure cron job for auto-scaling
-#               CRON_JOB="*/5 * * * * /home/ubuntu/backend/scale.sh >> /home/ubuntu/cron.log 2>&1"
-#               (crontab -l 2>/dev/null | grep -Fxq "$CRON_JOB") || (crontab -l 2>/dev/null; echo "$CRON_JOB") | crontab -
-
-#               # Verify running containers and cron job
-#               sudo docker ps
-#               crontab -l
-#             EOF
-
-#     - name: Configure AWS Credentials
-#       uses: aws-actions/configure-aws-credentials@v1
-#       with:
-#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#           aws-region: ${{ secrets.AWS_REGION }}
-
-#     - name: Allocate and Associate Elastic IP
-#       id: allocate_eip
-#       run: |
-#           INSTANCE_ID=$(aws ec2 describe-instances \
-#            --filters "Name=tag:Name,Values=mern-server-frontend" \
-#             --query "Reservations[*].Instances[*].InstanceId" --output text)
-
-#           if [ -z "$INSTANCE_ID" ]; then
-#           echo "Error: Unable to find instance." && exit 1
-#           fi
-
-#           CURRENT_IP=$(aws ec2 describe-addresses \
-#           --filters "Name=instance-id,Values=$INSTANCE_ID" \
-#           --query "Addresses[*].PublicIp" --output text)
-
-#           if [ -n "$CURRENT_IP" ]; then
-#           echo "Elastic IP already associated: $CURRENT_IP"
-#           echo "::set-output name=elastic_ip::$CURRENT_IP"
-#           exit 0
-#           fi
-
-#           echo "Allocating a new Elastic IP..."
-#           aws ec2 allocate-address --domain vpc --region us-east-2 --output json > eip.json
-#           ELASTIC_IP=$(jq -r '.PublicIp' eip.json)
-#           ALLOC_ID=$(jq -r '.AllocationId' eip.json)
-
-#           aws ec2 associate-address --instance-id $INSTANCE_ID --allocation-id $ALLOC_ID --region us-east-2
-
-#           echo "::set-output name=elastic_ip::$ELASTIC_IP"
-
-#     - name: Validate Elastic IP
-#       run: |
-#           ELASTIC_IP="${{ steps.allocate_eip.outputs.elastic_ip }}"
-#           echo "Elastic IP to be used: $ELASTIC_IP"
-#           if [[ -z "$ELASTIC_IP" || ! "$ELASTIC_IP" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-#           echo "Error: Invalid Elastic IP: '$ELASTIC_IP'" && exit 1
-#           fi
-
-#     - name: Update Route 53 Record
-#       run: |
-#           ELASTIC_IP="${{ steps.allocate_eip.outputs.elastic_ip }}"
-#           cat << EOF > route53.json
-#           {
-#            "Comment": "Update record to reflect new Elastic IP",
-#           "Changes": [{
-#           "Action": "UPSERT",
-#           "ResourceRecordSet": {
-#           "Name": "${{ secrets.AWS_DOMAIN_NAME }}",
-#           "Type": "A",
-#           "TTL": 300,
-#           "ResourceRecords": [{ "Value": "$ELASTIC_IP" }]
-#           }
-#           }]
-#           }
-#           EOF
-
-#           echo "Updating Route 53 DNS record with Elastic IP: $ELASTIC_IP"
-#           aws route53 change-resource-record-sets --hosted-zone-id ${{ secrets.AWS_HOSTED_ZONE_ID }} \
-#           --change-batch file://route53.json || exit 1
-#     - name: Verify Route 53 Record Update
-#       run: |
-#           nslookup ${{ secrets.AWS_DOMAIN_NAME }} || exit 1
-#           echo "Route 53 record successfully updated with IP: $ELASTIC_IP"
-
-
-
 name: CD
 on:
   workflow_run:
@@ -239,26 +42,13 @@ jobs:
               sudo apt-get update && sudo apt-get install -y nginx
               sudo systemctl enable nginx --now
             fi
-
             # Clone or pull the latest frontend code
-              cd /home/ubuntu
-              if [ -d "frontend" ]; then
-              echo "Frontend directory exists. Pulling the latest changes..."
-              cd frontend && git pull
-              else
-              echo "Cloning frontend repository..."
-              git clone https://github.com/bigstan00/project-mern frontend
-              cd frontend
-            fi
-
-            # Navigate to where docker-compose.yml is located
-            cd frontend  # Adjust path if needed (e.g., remove second 'frontend' if not necessary)
-
-            # Start frontend containers
-              echo "Starting frontend containers..."
-              sudo docker compose down || echo "No running containers to stop"
-              sudo docker compose up -d --build || { echo "Failed to start containers"; exit 1; }
-
+            cd /home/ubuntu
+            [ ! -d "frontend" ] && git clone https://github.com/bigstan00/project-mern frontend || (cd frontend && git pull)
+            cd frontend
+            # Deploy frontend using Docker Compose
+            sudo docker compose down || echo "No running containers to stop"
+            sudo docker compose up -d --build || { echo "Failed to start containers"; exit 1; }
             # List running containers
             sudo docker ps
   deploy_backend:
@@ -301,7 +91,6 @@ jobs:
             cd /home/ubuntu
             [ ! -d "backend" ] && git clone https://github.com/bigstan00/project-mern backend || (cd backend && git pull)
             cd backend
-            rm -rf frontend
             # Deploy backend using Docker Compose
             sudo docker compose down || echo "No running containers to stop"
             sudo docker compose up -d --build || { echo "Failed to start containers"; exit 1; }

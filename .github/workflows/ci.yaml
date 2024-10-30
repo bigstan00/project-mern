@@ -26,7 +26,6 @@ jobs:
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-
-
       - name: Log into Docker Hub
         uses: docker/login-action@v3
         with:
@@ -37,16 +36,13 @@ jobs:
         run: |
           cd frontend
           docker build -t frontend:1 .
-
       - name: Push Frontend Image to Docker Hub
         run: |
           IMAGE_NAME="bigstan00/project-mern-frontend"
           TAG="latest"
-
           # Check if the image with the latest tag already exists on Docker Hub
           EXISTS=$(curl -s -o /dev/null -w "%{http_code}" \
             https://hub.docker.com/v2/repositories/$IMAGE_NAME/tags/$TAG)
-
           if [ "$EXISTS" -eq 200 ]; then
             echo "Frontend image $IMAGE_NAME:$TAG already exists. Skipping push."
             exit 0
@@ -55,21 +51,17 @@ jobs:
             docker tag frontend:1 $IMAGE_NAME:$TAG
             docker push $IMAGE_NAME:$TAG
           fi
-
       - name: Build Backend Image
         run: |
           cd backend
           docker build -t backend:1 .
-
       - name: Push Backend Image to Docker Hub
         run: |
           IMAGE_NAME="bigstan00/project-mern-backend"
           TAG="latest"
-
           # Check if the image with the latest tag already exists on Docker Hub
           EXISTS=$(curl -s -o /dev/null -w "%{http_code}" \
             https://hub.docker.com/v2/repositories/$IMAGE_NAME/tags/$TAG)
-
           if [ "$EXISTS" -eq 200 ]; then
             echo "Backend image $IMAGE_NAME:$TAG already exists. Skipping push."
             exit 0
@@ -78,32 +70,25 @@ jobs:
             docker tag backend:1 $IMAGE_NAME:$TAG
             docker push $IMAGE_NAME:$TAG
           fi
-
       - name: Verify images
         run: |
           docker images
-
       - name: Run Docker Compose Locally
         run: |
           docker compose down --remove-orphans  # Ensure no conflicting containers
           docker compose up -d  # Start the entire stack
-
       - name: Verify Containers Are Running
         run: |
           docker ps
-
       - name: Check Prometheus Targets
         run: |
           curl -f http://localhost:9090/targets || exit 1  # Validate Prometheus is scraping
-
       - name: Check Alertmanager
         run: |
           curl -f http://localhost:9093 || exit 1
-
       - name: Check NGINX Configuration
         run: |
           docker exec nginx-cont nginx -t  # Validate NGINX config
-
       - name: Check Node Exporter
         run: |
           curl -f http://localhost:9100 || exit 1
