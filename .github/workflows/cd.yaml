@@ -243,13 +243,17 @@ jobs:
             # Clone or update frontend code
             cd /home/ubuntu
             if [ -d "/home/ubuntu/frontend" ]; then
-            echo "Frontend directory exists. Pulling the latest changes..."
-            cd /home/ubuntu/frontend && git pull
+              echo "Frontend directory exists. Pulling the latest changes..."
+             cd /home/ubuntu/frontend && git pull
             else
-            echo "Cloning frontend..."
+              echo "Cloning frontend..."
             git clone --filter=blob:none --sparse https://github.com/bigstan00/project-mern frontend
             cd frontend && git sparse-checkout set frontend
             fi
+
+            # Navigate to the nested directory where Docker Compose is located
+              cd /home/ubuntu/frontend/frontend
+
 
             # Deploy frontend using Docker Compose
             sudo docker compose down || echo "No running containers to stop"
@@ -296,14 +300,18 @@ jobs:
 
               # Clone or update backend code
               cd /home/ubuntu
-            if [ -d "/home/ubuntu/backend" ]; then
-            echo "Backend directory exists. Pulling the latest changes..."
-            cd /home/ubuntu/backend && git pull
-            else
-            echo "Cloning backend..."
-            git clone --filter=blob:none --sparse https://github.com/bigstan00/project-mern backend
-            cd backend && git sparse-checkout set backend
-            fi
+              if [ -d "/home/ubuntu/backend" ]; then
+              echo "Backend directory exists. Pulling the latest changes..."
+              cd /home/ubuntu/backend && git pull
+              else
+              echo "Cloning backend..."
+              git clone --filter=blob:none --sparse https://github.com/bigstan00/project-mern backend
+              cd backend && git sparse-checkout set backend
+              fi
+
+              # Navigate to the backend folder containing the necessary Docker Compose file
+              cd /home/ubuntu/backend/backend
+
 
               # Deploy backend using Docker Compose
               sudo docker compose down || echo "No running containers to stop"
