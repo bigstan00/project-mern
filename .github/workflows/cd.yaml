@@ -216,8 +216,6 @@ jobs:
           script: |
       - name: Check SSH Connection
         run: |
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.FRONTEND_EC2_SSH_KEY }} ubuntu@${{ secrets.FRONTEND_EC2_HOST }} "echo 'SSH Connection Successful'" || echo "SSH Connection Failed"
-
             # Check if Docker is installed
             if ! command -v docker &>/dev/null; then
               echo "Installing Docker..."
