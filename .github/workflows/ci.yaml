@@ -208,4 +208,5 @@ jobs:
 
       - name: Check NGINX Configuration
         run: |
-          docker exec nginx-cont nginx -t
+          docker exec nginx-cont-1 nginx -t
+

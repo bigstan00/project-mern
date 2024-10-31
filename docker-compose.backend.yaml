@@ -5,8 +5,6 @@ services:
       dockerfile: Dockerfile
     container_name: backend_cont-1
     restart: always
-    # ports:
-    #   - "3500:3500"
     environment:
       - MONGODB_URL=${DB_URL}
     volumes:
@@ -27,6 +25,7 @@ services:
 
 networks:
   my_network1: {}
+  nginx.conf: {}
 
 volumes:
   backend_data: {}
