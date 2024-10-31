@@ -47,8 +47,8 @@ jobs:
             [ ! -d "frontend" ] && git clone https://github.com/bigstan00/project-mern frontend || (cd frontend && git pull)
             cd frontend
             # Deploy frontend using Docker Compose
-            sudo docker compose down || echo "No running containers to stop"
-            sudo docker compose up -d --build || { echo "Failed to start containers"; exit 1; }
+            sudo docker compose -f docker-compose.frontend.yaml down || echo "No running containers to stop"
+            sudo docker compose -f docker-compose.frontend.yaml up -d --build || { echo "Failed to start containers"; exit 1; }
             # List running containers
             sudo docker ps
   deploy_backend:
@@ -92,8 +92,8 @@ jobs:
             [ ! -d "backend" ] && git clone https://github.com/bigstan00/project-mern backend || (cd backend && git pull)
             cd backend
             # Deploy backend using Docker Compose
-            sudo docker compose down || echo "No running containers to stop"
-            sudo docker compose up -d --build || { echo "Failed to start containers"; exit 1; }
+            sudo docker compose -f docker-compose.backend.yaml down || echo "No running containers to stop"
+            sudo docker compose -f docker-compose.backend.yaml up -d --build || { echo "Failed to start containers"; exit 1; }
             # Configure cron job for auto-scaling
             CRON_JOB="*/5 * * * * /home/ubuntu/backend/scale.sh >> /home/ubuntu/cron.log 2>&1"
             (crontab -l 2>/dev/null | grep -Fxq "$CRON_JOB") || (crontab -l 2>/dev/null; echo "$CRON_JOB") | crontab -
