@@ -36,12 +36,6 @@ jobs:
             CURRENT_USER=$(whoami)
             echo "Adding '$CURRENT_USER' to the Docker group..."
             sudo usermod -aG docker $CURRENT_USER
-            # Check if NGINX is installed
-            if ! command -v nginx &>/dev/null; then
-              echo "Installing NGINX..."
-              sudo apt-get update && sudo apt-get install -y nginx
-              sudo systemctl enable nginx --now
-            fi
             # Clone or pull the latest frontend code
             cd /home/ubuntu
             [ ! -d "frontend" ] && git clone https://github.com/bigstan00/project-mern frontend || (cd frontend && git pull)
