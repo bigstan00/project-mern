@@ -1,0 +1,32 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend_cont
+    restart: always
+    # ports:
+    #   - "3500:3500"
+    environment:
+      - MONGODB_URL=${DB_URL}
+    volumes:
+      - backend_data:/app/data
+    networks:
+      - my_network1
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-cont-1
+    ports:
+      - "3500:80"  # Expose NGINX on port 80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf  # Mount your custom NGINX config
+    networks:
+      - my_network1
+    restart: always
+
+networks:
+  my_network1: {}
+
+volumes:
+  backend_data: {}
