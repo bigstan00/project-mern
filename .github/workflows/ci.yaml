@@ -180,7 +180,6 @@ jobs:
 
       - name: Run Docker Compose Frontend Locally
         run: |
-          docker compose down --remove-orphans
           docker compose -f docker-compose.frontend.yaml up -d
           
       - name: Verify Frontend Containers Are Running
@@ -201,7 +200,6 @@ jobs:
 
       - name: Run Docker Compose Backend Locally
         run: |
-          docker compose down --remove-orphans
           docker compose -f docker-compose.backend.yaml up -d
 
       - name: Verify Backend Containers Are Running
