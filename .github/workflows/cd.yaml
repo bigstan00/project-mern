@@ -45,6 +45,8 @@ jobs:
             # Clone or pull the latest frontend code
             cd /home/ubuntu
             [ ! -d "frontend" ] && git clone https://github.com/bigstan00/project-mern frontend || (cd frontend && git pull)
+            cd frontend
+            cd frontend
             # Deploy frontend using Docker Compose
             sudo docker compose down || echo "No running containers to stop"
             sudo docker compose up -d --build || { echo "Failed to start containers"; exit 1; }
