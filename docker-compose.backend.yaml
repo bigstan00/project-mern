@@ -3,7 +3,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: backend_cont
+    container_name: backend_cont-1
     restart: always
     # ports:
     #   - "3500:3500"
