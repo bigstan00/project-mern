@@ -45,7 +45,6 @@ jobs:
             # Clone or pull the latest frontend code
             cd /home/ubuntu
             [ ! -d "frontend" ] && git clone https://github.com/bigstan00/project-mern frontend || (cd frontend && git pull)
-            cd frontend
             # Deploy frontend using Docker Compose
             sudo docker compose down || echo "No running containers to stop"
             sudo docker compose up -d --build || { echo "Failed to start containers"; exit 1; }
@@ -160,4 +159,4 @@ jobs:
       - name: Verify Route 53 Record Update
         run: |
           nslookup ${{ secrets.AWS_DOMAIN_NAME }} || exit 1
-          echo "Route 53 record successfully updated with IP: $ELASTIC_IP"
+          echo "Route 53 record successfully updated with IP: $ELASTIC_IP"  
