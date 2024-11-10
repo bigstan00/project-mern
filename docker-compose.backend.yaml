@@ -23,9 +23,67 @@ services:
       - my_network1
     restart: always
 
+    node-exporter:
+    image: prom/node-exporter:latest
+    container_name: node-exporter-1
+    restart: always
+    volumes:
+      - /proc:/host/proc:ro,rslave
+      - /sys:/host/sys:ro,rslave
+      - /:/rootfs:ro,rslave
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+      - '--no-collector.powersupplyclass'
+    ports:
+      - "9100:9100"
+    networks:
+      - my_network1
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus_service-1
+    restart: always
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus:/etc/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yaml'
+      - '--storage.tsdb.path=/prometheus'
+    networks:
+      - my_network1
+
+  alertmanager:
+    image: prom/alertmanager:latest
+    restart: always
+    container_name: alertmgr-1
+    ports:
+      - "9093:9093"
+    volumes:
+      - "./alert-manager:/config"
+      - alert-manager-data:/data
+    command:
+      - '--config.file=/config/alertmanager.yaml'
+      - '--log.level=debug'
+    deploy:
+      restart_policy:
+        condition: on-failure
+    networks:
+      - my_network1
+    
+    
+
+volumes:
+
+
 networks:
   my_network1: {}
-  nginx.conf: {}
 
 volumes:
   backend_data: {}
+  prometheus-data: {}
+  alert-manager-data: {}
+  nginx.conf: {}
