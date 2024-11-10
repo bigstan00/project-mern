@@ -49,23 +49,24 @@ jobs:
             NGINX_FRONTEND_CONFIG="/etc/nginx/sites-available/frontend"
             if [ ! -f "$NGINX_FRONTEND_CONFIG" ]; then
               echo "Configuring NGINX for Frontend..."
-              sudo bash -c "cat > $NGINX_FRONTEND_CONFIG" << 'EOL'
-server {
-    listen 80;
-    server_name bstan00.xyz;  # Your domain name
+            sudo bash -c "cat > $NGINX_FRONTEND_CONFIG" << 'EOL'
+            server {
+            listen 80;
+            server_name bstan00.xyz;  # Your domain name
 
-    location / {
-        root /home/ubuntu/frontend;
-        index index.html;
-        try_files $uri $uri/ /index.html;
-    }
+            location / {
+              root /home/ubuntu/frontend;
+              index index.html;
+              try_files $uri $uri/ /index.html;
+              }
 
-    error_page 404 /404.html;
-    location = /404.html {
-        internal;
-    }
-}
-EOL
+              error_page 404 /404.html;
+              location = /404.html {
+              internal;
+              }
+            }
+            EOL
+
               sudo ln -s $NGINX_FRONTEND_CONFIG /etc/nginx/sites-enabled/
               sudo nginx -t && sudo systemctl restart nginx
               echo "Frontend NGINX configuration done."
@@ -78,29 +79,29 @@ EOL
             if [ ! -f "$NGINX_BACKEND_CONFIG" ]; then
               echo "Configuring NGINX for Backend..."
               sudo bash -c "cat > $NGINX_BACKEND_CONFIG" << 'EOL'
-server {
-    listen 80;
-    server_name bstan00.xyz;  # Your domain name
+              server {
+                  listen 80;
+                  server_name bstan00.xyz;  # Your domain name
 
-    # Allow traffic only from the frontend IP or your trusted source
-    allow 192.168.1.1;  # Replace with your frontend's IP address
-    deny all;
+                  # Allow traffic only from the frontend IP or your trusted source
+                  allow 192.168.1.1;  # Replace with your frontend's IP address
+                  deny all;
 
-    location /api/ {
-        proxy_pass http://localhost:3500;  # Backend running on port 5000
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade \$http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host \$host;
-        proxy_cache_bypass \$http_upgrade;
-    }
+                  location /api/ {
+                      proxy_pass http://localhost:3500;  # Backend running on port 5000
+                      proxy_http_version 1.1;
+                      proxy_set_header Upgrade \$http_upgrade;
+                      proxy_set_header Connection 'upgrade';
+                      proxy_set_header Host \$host;
+                      proxy_cache_bypass \$http_upgrade;
+                  }
 
-    error_page 502 /502.html;
-    location = /502.html {
-        internal;
-    }
-}
-EOL
+                  error_page 502 /502.html;
+                  location = /502.html {
+                      internal;
+                  }
+              }
+              EOL
               sudo ln -s $NGINX_BACKEND_CONFIG /etc/nginx/sites-enabled/
               sudo nginx -t && sudo systemctl restart nginx
               echo "Backend NGINX configuration done."
