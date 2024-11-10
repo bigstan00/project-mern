@@ -178,11 +178,12 @@ jobs:
         run: |
           docker images
 
-      - name: Run Docker Compose Frontend Locally
+      - name: Run Docker Compose Locally
         run: |
-          docker compose -f docker-compose.frontend.yaml up -d
+          docker compose down --remove-orphans
+          docker compose up -d
           
-      - name: Verify Frontend Containers Are Running
+      - name: Verify Containers Are Running
         run: |
           docker ps
 
@@ -197,14 +198,6 @@ jobs:
       - name: Check Node Exporter
         run: |
           curl -f http://localhost:9100 || exit 1
-
-      - name: Run Docker Compose Backend Locally
-        run: |
-          docker compose -f docker-compose.backend.yaml up -d
-
-      - name: Verify Backend Containers Are Running
-        run: |
-          docker ps
 
       - name: Check NGINX Configuration
         run: |

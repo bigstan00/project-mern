@@ -6,13 +6,13 @@ on:
       - completed
 
 jobs:
-  deploy_frontend:
+  deploy_application:
     runs-on: self-hosted
     steps:
-      - name: SSH to Frontend EC2 and Deploy
-        uses: appleboy/ssh-action@v0.1.9  # Update to the latest version
+      - name: SSH to EC2 and Deploy
+        uses: appleboy/ssh-action@v0.1.9
         with:
-          host: ${{ secrets.FRONTEND_EC2_HOST }}
+          host: ${{ secrets.FRONTEND_EC2_HOST }}  # Update with the correct EC2 instance IP
           username: ubuntu
           key: ${{ secrets.FRONTEND_EC2_SSH_KEY }}
           port: 22
@@ -32,69 +32,113 @@ jobs:
               sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
               sudo systemctl enable docker --now
             fi
+
             # Add the current user to the Docker group
             CURRENT_USER=$(whoami)
             echo "Adding '$CURRENT_USER' to the Docker group..."
             sudo usermod -aG docker $CURRENT_USER
-            # Clone or pull the latest frontend code
+
+            # Install NGINX
+            echo "Installing NGINX..."
+            sudo apt-get update
+            sudo apt-get install -y nginx
+            sudo systemctl enable nginx --now
+            echo "NGINX installed successfully."
+
+            # Check and configure NGINX for Frontend (only if not already configured)
+            NGINX_FRONTEND_CONFIG="/etc/nginx/sites-available/frontend"
+            if [ ! -f "$NGINX_FRONTEND_CONFIG" ]; then
+              echo "Configuring NGINX for Frontend..."
+              sudo bash -c "cat > $NGINX_FRONTEND_CONFIG" << 'EOL'
+              server {
+                  listen 80;
+                  server_name bstan00.xyz;  # Your domain name
+
+                  location / {
+                      root /home/ubuntu/frontend;  # Update this to your frontend build directory
+                      index index.html;  # Default file
+                      try_files $uri $uri/ /index.html;  # For single-page applications
+                  }
+
+                  error_page 404 /404.html;  # Optional: Custom 404 page
+                  location = /404.html {
+                      internal;
+                  }
+              }
+              EOL
+              sudo ln -s $NGINX_FRONTEND_CONFIG /etc/nginx/sites-enabled/
+              sudo nginx -t && sudo systemctl restart nginx
+              echo "Frontend NGINX configuration done."
+            else
+              echo "Frontend NGINX configuration already exists."
+            fi
+
+            # Check and configure NGINX for Backend (only if not already configured)
+            NGINX_BACKEND_CONFIG="/etc/nginx/sites-available/backend"
+            if [ ! -f "$NGINX_BACKEND_CONFIG" ]; then
+              echo "Configuring NGINX for Backend..."
+              sudo bash -c "cat > $NGINX_BACKEND_CONFIG" << 'EOL'
+              server {
+                  listen 80;
+                  server_name bstan00.xyz;  # Your domain name
+
+                  # Allow traffic only from the frontend IP or your trusted source
+                  allow 192.168.1.1;  # Replace with your frontend's IP address
+                  deny all;
+
+                  location /api/ {
+                      proxy_pass http://localhost:3500;  # Backend running on port 5000
+                      proxy_http_version 1.1;
+                      proxy_set_header Upgrade \$http_upgrade;
+                      proxy_set_header Connection 'upgrade';
+                      proxy_set_header Host \$host;
+                      proxy_cache_bypass \$http_upgrade;
+                  }
+
+                  error_page 502 /502.html;
+                  location = /502.html {
+                      internal;
+                  }
+              }
+              EOL
+              sudo ln -s $NGINX_BACKEND_CONFIG /etc/nginx/sites-enabled/
+              sudo nginx -t && sudo systemctl restart nginx
+              echo "Backend NGINX configuration done."
+            else
+              echo "Backend NGINX configuration already exists."
+            fi
+
             cd /home/ubuntu
-            [ ! -d "frontend" ] && git clone https://github.com/bigstan00/project-mern frontend || (cd frontend && git pull)
-            cd frontend
-            # Deploy frontend using Docker Compose
-            sudo docker compose -f docker-compose.frontend.yaml down || echo "No running containers to stop"
-            sudo docker compose -f docker-compose.frontend.yaml up -d --build || { echo "Failed to start containers"; exit 1; }
-            # List running containers
-            sudo docker ps
-  deploy_backend:
-    runs-on: self-hosted
-    steps:
-      - name: SSH to Backend EC2 via Bastion and Deploy
-        uses: appleboy/ssh-action@v0.1.5
-        with:
-          host: ${{ secrets.BASTION_HOST }}
-          username: ubuntu
-          key: ${{ secrets.BASTION_SSH_KEY }}
-          port: 22
-          script: |
-            ssh -o StrictHostKeyChecking=no -A -i /home/ubuntu/stan-keypai.pem ubuntu@${{ secrets.BACKEND_PRIVATE_IP }} << 'EOF'
-            # Check if Docker is installed
-            if ! command -v docker &>/dev/null; then
-              echo "Installing Docker..."
-              sudo apt-get update && sudo apt-get install -y ca-certificates curl gnupg
-              sudo install -m 0755 -d /etc/apt/keyrings
-              curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc > /dev/null
-              sudo chmod a+r /etc/apt/keyrings/docker.asc
-              echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
-              https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-              sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-              sudo apt-get update && sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
-              sudo systemctl enable docker --now
+
+            # Clone or pull the latest project code
+            if [ ! -d "/home/ubuntu/project-mern" ]; then
+              git clone https://github.com/bigstan00/project-mern
+            else
+              cd /home/ubuntu/project-mern && git fetch && git pull
             fi
-            # Add 'ubuntu' user to Docker group
-            if ! groups ubuntu | grep -q "\bdocker\b"; then
-              echo "Adding 'ubuntu' user to the Docker group..."
-              sudo usermod -aG docker ubuntu
-            fi
-            # Check if NGINX is installed
-            if ! command -v nginx &>/dev/null; then
-              echo "Installing NGINX..."
-              sudo apt-get update && sudo apt-get install -y nginx
-              sudo systemctl enable nginx --now
-            fi
-            # Clone or pull the latest backend code
-            cd /home/ubuntu
-            [ ! -d "backend" ] && git clone https://github.com/bigstan00/project-mern backend || (cd backend && git pull)
-            cd backend
-            # Deploy backend using Docker Compose
-            sudo docker compose -f docker-compose.backend.yaml down || echo "No running containers to stop"
-            sudo docker compose -f docker-compose.backend.yaml up -d --build || { echo "Failed to start containers"; exit 1; }
-            # Configure cron job for auto-scaling
+
+            # Navigate to the project directory
+            cd /home/ubuntu/project-mern
+
+            # Stop and remove any running containers
+            sudo docker-compose down
+
+            # Build and start containers in detached mode
+            sudo docker-compose up -d --build
+
+            # Configure cron job for auto-scaling (only if it doesn't already exist)
             CRON_JOB="*/5 * * * * /home/ubuntu/backend/scale.sh >> /home/ubuntu/cron.log 2>&1"
-            (crontab -l 2>/dev/null | grep -Fxq "$CRON_JOB") || (crontab -l 2>/dev/null; echo "$CRON_JOB") | crontab -
+            if ! crontab -l | grep -Fxq "$CRON_JOB"; then
+              (crontab -l 2>/dev/null; echo "$CRON_JOB") | crontab -
+              echo "Cron job for scaling added."
+            else
+              echo "Cron job for scaling already exists."
+            fi
+
             # Verify running containers and cron job
             sudo docker ps
-            crontab -l
-            EOF
+            crontab -l  
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -125,6 +169,7 @@ jobs:
           ALLOC_ID=$(jq -r '.AllocationId' eip.json)
           aws ec2 associate-address --instance-id $INSTANCE_ID --allocation-id $ALLOC_ID --region us-east-2
           echo "::set-output name=elastic_ip::$ELASTIC_IP"
+
       - name: Validate Elastic IP
         run: |
           ELASTIC_IP="${{ steps.allocate_eip.outputs.elastic_ip }}"
@@ -132,6 +177,7 @@ jobs:
           if [[ -z "$ELASTIC_IP" || ! "$ELASTIC_IP" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "Error: Invalid Elastic IP: '$ELASTIC_IP'" && exit 1
           fi
+
       - name: Update Route 53 Record
         run: |
           ELASTIC_IP="${{ steps.allocate_eip.outputs.elastic_ip }}"
@@ -151,7 +197,8 @@ jobs:
           EOF
           aws route53 change-resource-record-sets --hosted-zone-id ${{ secrets.AWS_HOSTED_ZONE_ID }} \
             --change-batch file://route53.json
+
       - name: Verify Route 53 Record Update
         run: |
           nslookup ${{ secrets.AWS_DOMAIN_NAME }} || exit 1
-          echo "Route 53 record successfully updated with IP: $ELASTIC_IP"  
+          echo "Route 53 record successfully updated with IP: $ELASTIC_IP"

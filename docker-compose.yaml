@@ -11,6 +11,19 @@ services:
       - backend_data:/app/data
     networks:
       - my_network1
+  
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend_cont-1
+    restart: always
+    ports:
+      - "3000:3000"
+    networks:
+      - my_network1
+    depends_on:
+      - backend
 
   nginx:
     image: nginx:latest
@@ -22,8 +35,7 @@ services:
     networks:
       - my_network1
     restart: always
-
-    node-exporter:
+  node-exporter:
     image: prom/node-exporter:latest
     container_name: node-exporter-1
     restart: always
@@ -42,6 +54,7 @@ services:
     networks:
       - my_network1
 
+
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus_service-1
@@ -55,6 +68,7 @@ services:
       - '--storage.tsdb.path=/prometheus'
     networks:
       - my_network1
+    
 
   alertmanager:
     image: prom/alertmanager:latest
@@ -73,17 +87,16 @@ services:
         condition: on-failure
     networks:
       - my_network1
-    
-    
-
-volumes:
-
-
 networks:
-  my_network1: {}
+  my_network1:
+    external: true
+
 
 volumes:
   backend_data: {}
   prometheus-data: {}
   alert-manager-data: {}
   nginx.conf: {}
+
+
+
