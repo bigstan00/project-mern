@@ -32,7 +32,7 @@ function Todos({data, setData}) {
         updatedData.splice(toIndex, 0, movedTodo);
     
         try {
-            await axios.patch('http://10.0.8.52:3500/todo/reorder', { newOrder: updatedData });
+            await axios.patch('http://10.0.7.5:3500/todo/reorder', { newOrder: updatedData });
             setData(updatedData);
         } catch (error) {
             console.error("Error reordering todos:", error);
@@ -42,7 +42,7 @@ function Todos({data, setData}) {
 
     const clearComplete = async () => {
         try {
-            let response = await axios.delete("http://10.0.8.52:3500/todo/clear-completed")
+            let response = await axios.delete("http://10.0.7.5:3500/todo/clear-completed")
             if(response.data.status){
                 setData(response.data.data)
             }   

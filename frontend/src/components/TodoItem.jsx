@@ -26,7 +26,7 @@ function TodoItem({ todo, index, moveTodo, setData }) {
 
     const deleteTodo = async (id) => {
         try {
-            let response = await axios.delete(`http://10.0.8.52:3500/todo/${id}`)
+            let response = await axios.delete(`http://10.0.7.5:3500/todo/${id}`)
             if(response.data.status){
                 setData(response.data.data)
             }

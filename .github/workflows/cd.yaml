@@ -76,7 +76,7 @@ jobs:
                   listen 80;
                   server_name bstan00.xyz;  # Your domain name
                   # Allow traffic only from the frontend IP or your trusted source
-                  allow 192.168.1.1;  # Replace with your frontend's IP address
+                  allow 10.0.7.5;  # Replace with your frontend's IP address
                   deny all;
                   location /api/ {
                       proxy_pass http://localhost:3500;  # Backend running on port 5000

@@ -24,7 +24,6 @@ services:
       - my_network1
     depends_on:
       - backend
-
   nginx:
     image: nginx:latest
     container_name: nginx-cont-1
