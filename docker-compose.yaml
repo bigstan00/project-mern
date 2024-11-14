@@ -7,6 +7,7 @@ services:
     restart: always
     environment:
       - MONGODB_URL=${DB_URL}
+      - PORT=${PORT}
     volumes:
       - backend_data:/app/data
     networks:

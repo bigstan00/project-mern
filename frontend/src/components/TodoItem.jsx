@@ -26,9 +26,10 @@ function TodoItem({ todo, index, moveTodo, setData }) {
 
     const deleteTodo = async (id) => {
         try {
-            let response = await axios.delete(`http://10.0.7.5:3500/todo/${id}`)
+            const apiUrl = process.env.REACT_APP_API_URL; // Use the API URL from the environment variable
+            let response = await axios.delete(`${apiUrl}/todo/${id}`);
             if(response.data.status){
-                setData(response.data.data)
+                setData(response.data.data);
             }
         } catch (error) {
             console.log(error);
@@ -37,13 +38,13 @@ function TodoItem({ todo, index, moveTodo, setData }) {
 
     const completeTodo = async (id) => {
         try {
-            let response = await axios.put(`http://10.0.8.52:3500/todo/${id}`)
+            const apiUrl = process.env.REACT_APP_API_URL; // Use the API URL from the environment variable
+            let response = await axios.put(`${apiUrl}/todo/${id}`);
             if(response.data.status){
-                setData(response.data.data)
+                setData(response.data.data);
             }
         } catch (error) {
             console.error(error);
-            
         }
     }
 

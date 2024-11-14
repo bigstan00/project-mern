@@ -11,10 +11,11 @@ function Todos({data, setData}) {
 
     const Fetch = async () => {
         setLoading(true);
-        const todo = await axios.get("http://10.0.8.52:3500/todo")
-        let todoItem = await todo.data
+        const apiUrl = process.env.REACT_APP_API_URL; // Access the API URL from the environment variable
+        const todo = await axios.get(`${apiUrl}/todo`);
+        let todoItem = await todo.data;
         setLoading(false);
-        return todoItem
+        return todoItem;
     }
 
     useEffect(() => {
@@ -32,7 +33,8 @@ function Todos({data, setData}) {
         updatedData.splice(toIndex, 0, movedTodo);
     
         try {
-            await axios.patch('http://10.0.7.5:3500/todo/reorder', { newOrder: updatedData });
+            const apiUrl = process.env.REACT_APP_API_URL; // Use API URL from the environment variable
+            await axios.patch(`${apiUrl}/todo/reorder`, { newOrder: updatedData });
             setData(updatedData);
         } catch (error) {
             console.error("Error reordering todos:", error);
@@ -42,13 +44,13 @@ function Todos({data, setData}) {
 
     const clearComplete = async () => {
         try {
-            let response = await axios.delete("http://10.0.7.5:3500/todo/clear-completed")
+            const apiUrl = process.env.REACT_APP_API_URL; // Use API URL from the environment variable
+            let response = await axios.delete(`${apiUrl}/todo/clear-completed`);
             if(response.data.status){
                 setData(response.data.data)
             }   
         } catch (error) {
             console.error(error);
-            
         }
     }
 
