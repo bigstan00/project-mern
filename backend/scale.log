@@ -20525,3 +20525,117 @@ No scaling action needed for backend
 No scaling action needed for backend
 No scaling action needed for backend
 No scaling action needed for backend
+Service: backend, Instances: 0, CPU: 0%
+No scaling action needed for backend
+Service: backend, Instances: 0, CPU: 0%
+No scaling action needed for backend
+Service: backend, Instances: 0, CPU: 0%
+No scaling action needed for backend
+Service: backend, Instances: 0, CPU: 0%
+No scaling action needed for backend
+Service: backend, Instances: 0, CPU: 0%
+No scaling action needed for backend
+Service: backend, Instances: 0, CPU: 0%
+No scaling action needed for backend
+Service: backend, Instances: 0, CPU: 0%
+No scaling action needed for backend
+Service: backend, Instances: 0, CPU: 0%
+No scaling action needed for backend
+Service: backend, Instances: 0, CPU: 0%
+No scaling action needed for backend
+Service: backend, Instances: 0, CPU: 0%
+No scaling action needed for backend
+Service: backend, Instances: 0, CPU: 0%
+No scaling action needed for backend
+Service: backend, Instances: 1, CPU: 0%
+No scaling action needed for backend
+Scaling backend to 2 instances.
+Service: backend, Instances: 1, CPU: 733%
+Scaling backend to 2 instances.
+Service: backend, Instances: 1, CPU: 735%
+Scaling backend to 2 instances.
+Scaling backend to 1 instances.
+No scaling action needed for backend
+Service: backend, Instances: 1, CPU: 766%
+Scaling backend to 2 instances.
+Scaling backend to 3 instances.
+Service: backend, Instances: 3, CPU: 234%
+Scaling backend to 4 instances.
+Scaling backend to 5 instances.
+No scaling action needed for backend
+Service: backend, Instances: 5, CPU: 154%
+No scaling action needed for backend
+No scaling action needed for backend
+Scaling backend to 4 instances.
+Service: backend, Instances: 4, CPU: 0%
+Scaling backend to 3 instances.
+Scaling backend to 2 instances.
+Scaling backend to 1 instances.
+Service: backend, Instances: 1, CPU: 0%
+No scaling action needed for backend
+No scaling action needed for backend
+No scaling action needed for backend
+Service: backend, Instances: 1, CPU: 0%
+No scaling action needed for backend
+No scaling action needed for backend
+No scaling action needed for backend
+Service: backend, Instances: 1, CPU: 0%
+No scaling action needed for backend
+No scaling action needed for backend
+No scaling action needed for backend
+Service: backend, Instances: 1, CPU: 0%
+No scaling action needed for backend
+No scaling action needed for backend
+No scaling action needed for backend
+Service: backend, Instances: 1, CPU: 0%
+No scaling action needed for backend
+No scaling action needed for backend
+No scaling action needed for backend
+Service: backend, Instances: 1, CPU: 0%
+No scaling action needed for backend
+No scaling action needed for backend
+No scaling action needed for backend
+Service: backend, Instances: 1, CPU: 0%
+No scaling action needed for backend
+No scaling action needed for backend
+No scaling action needed for backend
+Service: backend, Instances: 1, CPU: 0%
+No scaling action needed for backend
+No scaling action needed for backend
+No scaling action needed for backend
+Service: backend, Instances: 1, CPU: 0%
+No scaling action needed for backend
+No scaling action needed for backend
+No scaling action needed for backend
+Service: backend, Instances: 1, CPU: 0%
+No scaling action needed for backend
+No scaling action needed for backend
+No scaling action needed for backend
+Service: backend, Instances: 1, CPU: 1%
+No scaling action needed for backend
+No scaling action needed for backend
+No scaling action needed for backend
+Service: backend, Instances: 1, CPU: 0%
+No scaling action needed for backend
+No scaling action needed for backend
+No scaling action needed for backend
+Service: backend, Instances: 1, CPU: 0%
+No scaling action needed for backend
+No scaling action needed for backend
+No scaling action needed for backend
+Service: backend, Instances: 1, CPU: 0%
+No scaling action needed for backend
+No scaling action needed for backend
+No scaling action needed for backend
+No scaling action needed for backend
+Service: backend, Instances: 1, CPU: 0%
+No scaling action needed for backend
+No scaling action needed for backend
+No scaling action needed for backend
+Service: backend, Instances: 1, CPU: 0%
+No scaling action needed for backend
+Service: backend, Instances: 1, CPU: 0%
+No scaling action needed for backend
+No scaling action needed for backend
+No scaling action needed for backend
+No scaling action needed for backend

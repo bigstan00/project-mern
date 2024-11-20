@@ -3,7 +3,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: backend_cont-1
+    #container_name: backend_cont-1
     restart: always
     environment:
       - MONGODB_URL=${DB_URL}
@@ -17,7 +17,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: frontend_cont-1
+    #container_name: frontend_cont-1
     restart: always
     ports:
       - "3000:3000"
@@ -28,7 +28,7 @@ services:
   
   nginx:
     image: nginx:latest
-    container_name: nginx-cont-1
+    #container_name: nginx-cont-1
     ports:
       - "3500:80"  # Expose NGINX on port 80
     volumes:
@@ -58,7 +58,7 @@ services:
 
   prometheus:
     image: prom/prometheus:latest
-    container_name: prometheus_service-1
+    #container_name: prometheus_service-1
     restart: always
     ports:
       - "9090:9090"
@@ -74,7 +74,7 @@ services:
   alertmanager:
     image: prom/alertmanager:latest
     restart: always
-    container_name: alertmgr-1
+    #container_name: alertmgr-1
     ports:
       - "9093:9093"
     volumes:
