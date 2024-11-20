@@ -1,3 +1,4 @@
+```bash
 # MERN Application Deployment with Auto-scaling
 
 ## Project Overview
@@ -34,7 +35,7 @@ This project involves the deployment of a MERN (MongoDB, Express, React, Node.js
 - SSH key pair for EC2 instance access
 
 ### Cloning the Repository:
-
+```bash
 git clone https://github.com/bigstan00/project-mern.git
 cd project-mern
 Environment Setup:
@@ -110,10 +111,9 @@ Steps to mitigate:
     • Regularly update outdated dependencies.
     • Replace deprecated packages with actively maintained alternatives.
     • Use npm audit to identify vulnerabilities and outdated packages.
-### Future Enhancements
+Future Enhancements
     • Additional Auto-scaling Rules: Implement more advanced auto-scaling based on request load, not just CPU or memory usage.
     • Improved Monitoring: Integrate more detailed application-level monitoring with tools like Grafana.
     • Error Handling: Improve error handling and logging in both frontend and backend services.
-
-### Conclusion
+Conclusion
 This project successfully deploys a scalable MERN application with monitoring, alerting, and auto-scaling features. It leverages Docker, AWS, and Prometheus to ensure the application remains performant even as traffic increases.
